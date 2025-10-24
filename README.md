@@ -98,7 +98,7 @@ A comprehensive web application that enables users to create professional-qualit
 
    # API Keys (Add your actual API keys here)
    SHOTSTACK_API_KEY=4bEY6gvxmoeZjQkriUdsc1mdz9lLXW7a9n5xqNyQ
-   CREATOMATE_API_KEY=your-creatomate-api-key
+   CREATOMATE_API_KEY=0c924f2a645a4c5a92beff2e4b228feb783d24983315182b1c6bf1a618ff9f5699dcbdd7b0aa4e08d3965390821122ec
    PLAINLY_API_KEY=fV34uiorV7nIQDCwoNtqEdbVx8AwVfsN
    TAVUS_API_KEY=e39b1deee39e472589365b02f01002f3
    ```

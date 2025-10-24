@@ -74,7 +74,7 @@ const Dashboard = () => {
 
   const apis = [
     { id: 'shotstack', name: 'Shotstack', status: 'connected', color: '#10b981' },
-    { id: 'creatomate', name: 'Creatomate', status: 'connected', color: '#3b82f6' },
+    { id: 'creatomate', name: 'Creatomate', status: 'connected', color: '#10b981' },
     { id: 'plainly', name: 'Plainly Videos', status: 'connected', color: '#10b981' },
     { id: 'tavus', name: 'Tavus', status: 'connected', color: '#10b981' },
     { id: 'promptclip', name: 'PromptClip', status: 'available', color: '#8b5cf6' },
