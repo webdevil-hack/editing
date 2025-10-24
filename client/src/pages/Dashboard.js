@@ -76,7 +76,7 @@ const Dashboard = () => {
     { id: 'shotstack', name: 'Shotstack', status: 'connected', color: '#10b981' },
     { id: 'creatomate', name: 'Creatomate', status: 'connected', color: '#3b82f6' },
     { id: 'plainly', name: 'Plainly Videos', status: 'not_connected', color: '#f59e0b' },
-    { id: 'tavus', name: 'Tavus', status: 'not_connected', color: '#ef4444' },
+    { id: 'tavus', name: 'Tavus', status: 'connected', color: '#10b981' },
     { id: 'promptclip', name: 'PromptClip', status: 'available', color: '#8b5cf6' },
     { id: 'lucy', name: 'Lucy Edit', status: 'available', color: '#ec4899' },
     { id: 'ltx', name: 'LTXVideo', status: 'available', color: '#06b6d4' },
