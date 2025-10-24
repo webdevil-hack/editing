@@ -67,20 +67,88 @@ const Dashboard = () => {
 
   const tabs = [
     { id: 'projects', label: 'My Projects', icon: <Video size={20} /> },
-    { id: 'templates', label: 'Templates', icon: <Zap size={20} /> },
+    { id: 'tools', label: 'AI Tools', icon: <Zap size={20} /> },
+    { id: 'templates', label: 'Templates', icon: <Edit3 size={20} /> },
     { id: 'analytics', label: 'Analytics', icon: <BarChart3 size={20} /> },
     { id: 'settings', label: 'Settings', icon: <Settings size={20} /> }
   ];
 
   const apis = [
-    { id: 'shotstack', name: 'Shotstack', status: 'connected', color: '#10b981' },
-    { id: 'creatomate', name: 'Creatomate', status: 'connected', color: '#10b981' },
-    { id: 'plainly', name: 'Plainly Videos', status: 'connected', color: '#10b981' },
-    { id: 'tavus', name: 'Tavus', status: 'connected', color: '#10b981' },
-    { id: 'promptclip', name: 'PromptClip', status: 'available', color: '#8b5cf6' },
-    { id: 'lucy', name: 'Lucy Edit', status: 'available', color: '#ec4899' },
-    { id: 'ltx', name: 'LTXVideo', status: 'available', color: '#06b6d4' },
-    { id: 'wan', name: 'Wan 2.1', status: 'available', color: '#84cc16' }
+    { 
+      id: 'shotstack', 
+      name: 'Shotstack', 
+      status: 'connected', 
+      color: '#10b981',
+      description: 'Professional video generation with advanced editing',
+      features: ['HD/4K Video', 'Multiple Formats', 'Real-time Processing'],
+      icon: '🎬'
+    },
+    { 
+      id: 'creatomate', 
+      name: 'Creatomate', 
+      status: 'connected', 
+      color: '#3b82f6',
+      description: 'Template-based video creation for marketing',
+      features: ['Professional Templates', 'Brand Consistency', 'Quick Production'],
+      icon: '🎨'
+    },
+    { 
+      id: 'plainly', 
+      name: 'Plainly Videos', 
+      status: 'connected', 
+      color: '#f59e0b',
+      description: 'Automated video production from data',
+      features: ['Data-driven Videos', 'Automation', 'Bulk Processing'],
+      icon: '⚡'
+    },
+    { 
+      id: 'tavus', 
+      name: 'Tavus', 
+      status: 'connected', 
+      color: '#ef4444',
+      description: 'Personalized video generation with AI avatars',
+      features: ['AI Avatars', 'Personalization', 'Custom Voices'],
+      icon: '🤖'
+    }
+  ];
+
+  const tools = [
+    { 
+      id: 'promptclip', 
+      name: 'PromptClip', 
+      status: 'available', 
+      color: '#8b5cf6',
+      description: 'Open-source video generation from text prompts',
+      features: ['Open Source', 'Text-to-Video', 'Customizable'],
+      icon: '🔧'
+    },
+    { 
+      id: 'lucy', 
+      name: 'Lucy Edit', 
+      status: 'available', 
+      color: '#ec4899',
+      description: 'AI-powered video editing by Daycart',
+      features: ['AI Editing', 'Smart Cuts', 'Auto Enhancement'],
+      icon: '✨'
+    },
+    { 
+      id: 'ltx', 
+      name: 'LTXVideo', 
+      status: 'available', 
+      color: '#06b6d4',
+      description: 'Advanced video processing by Lightricks',
+      features: ['Professional Tools', 'Advanced Effects', 'High Quality'],
+      icon: '🎭'
+    },
+    { 
+      id: 'wan', 
+      name: 'Wan 2.1', 
+      status: 'available', 
+      color: '#84cc16',
+      description: 'Video generation tool by Alibaba',
+      features: ['Enterprise Grade', 'Scalable', 'Cloud Processing'],
+      icon: '☁️'
+    }
   ];
 
   const getStatusIcon = (status) => {
@@ -228,6 +296,97 @@ const Dashboard = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'tools' && (
+            <div className="tools-section">
+              <div className="section-header">
+                <h2>AI Video Tools & APIs</h2>
+                <p>Choose from our comprehensive collection of video generation tools and APIs</p>
+              </div>
+              
+              <div className="tools-categories">
+                <div className="category-section">
+                  <h3 className="category-title">
+                    <span className="category-icon">🔌</span>
+                    Professional APIs
+                    <span className="category-badge">4 Connected</span>
+                  </h3>
+                  <div className="tools-grid">
+                    {apis.map((api) => (
+                      <div key={api.id} className="tool-card api-card">
+                        <div className="tool-header">
+                          <div className="tool-icon">{api.icon}</div>
+                          <div className="tool-status">
+                            <div className={`status-dot ${api.status}`}></div>
+                            <span className="status-text">{api.status}</span>
+                          </div>
+                        </div>
+                        <div className="tool-content">
+                          <h4 className="tool-name">{api.name}</h4>
+                          <p className="tool-description">{api.description}</p>
+                          <div className="tool-features">
+                            {api.features.map((feature, index) => (
+                              <span key={index} className="feature-tag">{feature}</span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="tool-actions">
+                          <button className="tool-btn primary">
+                            <Play size={16} />
+                            Create Video
+                          </button>
+                          <button className="tool-btn secondary">
+                            <Settings size={16} />
+                            Configure
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="category-section">
+                  <h3 className="category-title">
+                    <span className="category-icon">🛠️</span>
+                    Open Source Tools
+                    <span className="category-badge">4 Available</span>
+                  </h3>
+                  <div className="tools-grid">
+                    {tools.map((tool) => (
+                      <div key={tool.id} className="tool-card tool-card-open">
+                        <div className="tool-header">
+                          <div className="tool-icon">{tool.icon}</div>
+                          <div className="tool-status">
+                            <div className={`status-dot ${tool.status}`}></div>
+                            <span className="status-text">{tool.status}</span>
+                          </div>
+                        </div>
+                        <div className="tool-content">
+                          <h4 className="tool-name">{tool.name}</h4>
+                          <p className="tool-description">{tool.description}</p>
+                          <div className="tool-features">
+                            {tool.features.map((feature, index) => (
+                              <span key={index} className="feature-tag">{feature}</span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="tool-actions">
+                          <button className="tool-btn primary">
+                            <Play size={16} />
+                            Use Tool
+                          </button>
+                          <button className="tool-btn secondary">
+                            <Eye size={16} />
+                            Learn More
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           )}

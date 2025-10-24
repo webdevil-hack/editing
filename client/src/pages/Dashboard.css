@@ -365,6 +365,7 @@
   color: #ef4444;
 }
 
+.tools-section,
 .templates-section,
 .analytics-section,
 .settings-section {
@@ -542,6 +543,229 @@
 .settings-btn:hover {
   background: rgba(102, 126, 234, 0.2);
   border-color: #667eea;
+}
+
+/* Tools Section Styles */
+.tools-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.category-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 32px;
+  backdrop-filter: blur(10px);
+}
+
+.category-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-icon {
+  font-size: 1.75rem;
+}
+
+.category-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.tool-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(102, 126, 234, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.tool-card:hover::before {
+  opacity: 1;
+}
+
+.api-card {
+  border-left: 4px solid #10b981;
+}
+
+.tool-card-open {
+  border-left: 4px solid #8b5cf6;
+}
+
+.tool-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.tool-icon {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.tool-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.status-dot.connected {
+  background: #10b981;
+}
+
+.status-dot.available {
+  background: #8b5cf6;
+}
+
+.status-dot.not_connected {
+  background: #f59e0b;
+}
+
+.status-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #9ca3af;
+  text-transform: capitalize;
+}
+
+.tool-content {
+  margin-bottom: 20px;
+}
+
+.tool-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.tool-description {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.tool-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feature-tag {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.tool-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.tool-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  flex: 1;
+}
+
+.tool-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.tool-btn.secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #9ca3af;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tool-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* Modal Styles */
