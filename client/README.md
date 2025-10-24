@@ -1,0 +1,1 @@
+Dev quickstart:\n\n1) Server: create \`/workspace/server/.env\` from \`.env.example\`, run `npm run dev` (requires MongoDB).\n2) Client: copy `client/.env.example` to `.env`, then `npm run dev`.\n3) Add your API keys in Dashboard → Keys.\n
