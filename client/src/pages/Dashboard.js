@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import apiService from '../services/api';
 import { 
   Plus, 
   Video, 
@@ -26,43 +27,64 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('projects');
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showApiKeysModal, setShowApiKeysModal] = useState(false);
+  const [newProject, setNewProject] = useState({
+    name: '',
+    prompt: '',
+    apiUsed: 'shotstack'
+  });
 
-  // Mock data for demonstration
+  // Load projects from API
   useEffect(() => {
-    setProjects([
-      {
-        id: 1,
-        name: 'Cinematic Landscape',
-        prompt: 'A breathtaking mountain landscape with dramatic lighting',
-        status: 'completed',
-        thumbnail: '/api/placeholder/300/200',
-        duration: '0:30',
-        createdAt: '2024-01-15',
-        apiUsed: 'shotstack'
-      },
-      {
-        id: 2,
-        name: 'Product Showcase',
-        prompt: 'Professional product presentation with 3D effects',
-        status: 'processing',
-        thumbnail: '/api/placeholder/300/200',
-        duration: '0:45',
-        createdAt: '2024-01-14',
-        apiUsed: 'creatomate'
-      },
-      {
-        id: 3,
-        name: 'Abstract Art',
-        prompt: 'Colorful abstract animation with fluid motion graphics',
-        status: 'draft',
-        thumbnail: '/api/placeholder/300/200',
-        duration: '1:00',
-        createdAt: '2024-01-13',
-        apiUsed: 'promptclip'
+    const loadProjects = async () => {
+      try {
+        setLoading(true);
+        const projectsData = await apiService.getProjects();
+        setProjects(projectsData);
+      } catch (error) {
+        console.error('Failed to load projects:', error);
+        setError('Failed to load projects');
+        // Fallback to mock data for demo
+        setProjects([
+          {
+            id: 1,
+            name: 'Cinematic Landscape',
+            prompt: 'A breathtaking mountain landscape with dramatic lighting',
+            status: 'completed',
+            thumbnail: '/api/placeholder/300/200',
+            duration: '0:30',
+            createdAt: '2024-01-15',
+            apiUsed: 'shotstack'
+          },
+          {
+            id: 2,
+            name: 'Product Showcase',
+            prompt: 'Professional product presentation with 3D effects',
+            status: 'processing',
+            thumbnail: '/api/placeholder/300/200',
+            duration: '0:45',
+            createdAt: '2024-01-14',
+            apiUsed: 'creatomate'
+          },
+          {
+            id: 3,
+            name: 'Abstract Art',
+            prompt: 'Colorful abstract animation with fluid motion graphics',
+            status: 'draft',
+            thumbnail: '/api/placeholder/300/200',
+            duration: '1:00',
+            createdAt: '2024-01-13',
+            apiUsed: 'promptclip'
+          }
+        ]);
+      } finally {
+        setLoading(false);
       }
-    ]);
+    };
+
+    loadProjects();
   }, []);
 
   const tabs = [
@@ -174,6 +196,54 @@ const Dashboard = () => {
         return 'Failed';
       default:
         return 'Draft';
+    }
+  };
+
+  const handleCreateProject = async (e) => {
+    e.preventDefault();
+    if (!newProject.name || !newProject.prompt) {
+      setError('Please fill in all fields');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const projectData = {
+        name: newProject.name,
+        prompt: newProject.prompt,
+        apiUsed: newProject.apiUsed,
+        status: 'draft'
+      };
+      
+      const createdProject = await apiService.createProject(projectData);
+      setProjects([createdProject, ...projects]);
+      setShowCreateModal(false);
+      setNewProject({ name: '', prompt: '', apiUsed: 'shotstack' });
+      setError(null);
+    } catch (error) {
+      console.error('Failed to create project:', error);
+      setError('Failed to create project. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleProcessVideo = async (projectId, apiKey, service) => {
+    try {
+      setLoading(true);
+      const result = await apiService.processVideo(projectId, apiKey, service);
+      
+      // Update project status
+      setProjects(projects.map(project => 
+        project.id === projectId 
+          ? { ...project, status: 'processing', jobId: result.jobId }
+          : project
+      ));
+    } catch (error) {
+      console.error('Failed to process video:', error);
+      setError('Failed to process video. Please check your API key.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -491,37 +561,68 @@ const Dashboard = () => {
               </button>
             </div>
             <div className="modal-content">
-              <div className="form-group">
-                <label>Project Name</label>
-                <input type="text" placeholder="Enter project name" />
-              </div>
-              <div className="form-group">
-                <label>Video Prompt</label>
-                <textarea 
-                  placeholder="Describe your video idea..."
-                  rows="4"
-                ></textarea>
-              </div>
-              <div className="form-group">
-                <label>Select API/Tool</label>
-                <select>
-                  <option value="">Choose an option</option>
-                  {apis.map(api => (
-                    <option key={api.id} value={api.id}>
-                      {api.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="modal-actions">
-                <button 
-                  className="btn-secondary"
-                  onClick={() => setShowCreateModal(false)}
-                >
-                  Cancel
-                </button>
-                <button className="btn-primary">Create Project</button>
-              </div>
+              <form onSubmit={handleCreateProject}>
+                {error && (
+                  <div className="error-message">
+                    {error}
+                  </div>
+                )}
+                <div className="form-group">
+                  <label>Project Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="Enter project name"
+                    value={newProject.name}
+                    onChange={(e) => setNewProject({...newProject, name: e.target.value})}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Video Prompt</label>
+                  <textarea 
+                    placeholder="Describe your video idea..."
+                    rows="4"
+                    value={newProject.prompt}
+                    onChange={(e) => setNewProject({...newProject, prompt: e.target.value})}
+                    required
+                  ></textarea>
+                </div>
+                <div className="form-group">
+                  <label>Select API/Tool</label>
+                  <select
+                    value={newProject.apiUsed}
+                    onChange={(e) => setNewProject({...newProject, apiUsed: e.target.value})}
+                  >
+                    <option value="">Choose an option</option>
+                    {apis.map(api => (
+                      <option key={api.id} value={api.id}>
+                        {api.name}
+                      </option>
+                    ))}
+                    {tools.map(tool => (
+                      <option key={tool.id} value={tool.id}>
+                        {tool.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="modal-actions">
+                  <button 
+                    type="button"
+                    className="btn-secondary"
+                    onClick={() => setShowCreateModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    type="submit"
+                    className="btn-primary"
+                    disabled={loading}
+                  >
+                    {loading ? 'Creating...' : 'Create Project'}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
