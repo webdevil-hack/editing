@@ -97,7 +97,7 @@ A comprehensive web application that enables users to create professional-qualit
    CLIENT_URL=http://localhost:3000
 
    # API Keys (Add your actual API keys here)
-   SHOTSTACK_API_KEY=your-shotstack-api-key
+   SHOTSTACK_API_KEY=4bEY6gvxmoeZjQkriUdsc1mdz9lLXW7a9n5xqNyQ
    CREATOMATE_API_KEY=your-creatomate-api-key
    PLAINLY_API_KEY=your-plainly-api-key
    TAVUS_API_KEY=your-tavus-api-key

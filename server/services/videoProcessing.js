@@ -49,7 +49,7 @@ const processWithShotstack = async (project, apiKey) => {
     };
   } catch (error) {
     console.error('Shotstack error:', error.response?.data || error.message);
-    throw new Error('Shotstack processing failed');
+    throw new Error('Shotstack processing failed: ' + (error.response?.data?.message || error.message));
   }
 };
 
