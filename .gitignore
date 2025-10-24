@@ -1,32 +1,59 @@
-# Node
-node_modules
+## Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+## Environment variables
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.backup
+
+## Logs
+logs
+*.log
+*.log.*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-.DS_Store
-.env
-.env.local
-.env.*.local
+lerna-debug.log*
 
-# Logs
-logs
-*.log
-*.log.*
+## PIDs
 pids
 *.pid
 *.seed
 *.pid.lock
 
-# Editor
+## OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+## IDE/editor
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
-# Build
+## Build outputs
 client/dist
 client/.vite
 server/dist
+/frontend/build
+/frontend/dist
+/backend/dist
+
+## Testing
 coverage
 
-# Misc
-*.swp
+## Misc
+*.pem
