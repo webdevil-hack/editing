@@ -1,60 +1,98 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './contexts/AuthContext';
 
-// Context
-import { AuthProvider } from './context/AuthContext';
-
-// Pages
+// Public Pages
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import FeaturesPage from './pages/FeaturesPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+
+// Protected Pages
 import Dashboard from './pages/Dashboard';
+import VideoEditor from './pages/VideoEditor';
+import ProjectsPage from './pages/ProjectsPage';
+import SettingsPage from './pages/SettingsPage';
 
 // Components
-import PrivateRoute from './components/PrivateRoute';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import LoadingSpinner from './components/ui/LoadingSpinner';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+
+// Styles
+import './App.css';
 
 function App() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   return (
-    <AuthProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/features" element={<FeaturesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route 
-              path="/dashboard/*" 
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              } 
-            />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
+    <div className="App">
+      <Navbar />
+      
+      <main className="main-content">
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          
+          {/* Auth Routes */}
+          <Route 
+            path="/login" 
+            element={user ? <Navigate to="/dashboard" /> : <LoginPage />} 
           />
-        </div>
-      </Router>
-    </AuthProvider>
+          <Route 
+            path="/signup" 
+            element={user ? <Navigate to="/dashboard" /> : <SignupPage />} 
+          />
+          
+          {/* Protected Routes */}
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/editor" element={
+            <ProtectedRoute>
+              <VideoEditor />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/editor/:id" element={
+            <ProtectedRoute>
+              <VideoEditor />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/projects" element={
+            <ProtectedRoute>
+              <ProjectsPage />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/settings" element={
+            <ProtectedRoute>
+              <SettingsPage />
+            </ProtectedRoute>
+          } />
+          
+          {/* Catch all route */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </main>
+      
+      {/* Only show footer on public pages */}
+      {!user && <Footer />}
+    </div>
   );
 }
 

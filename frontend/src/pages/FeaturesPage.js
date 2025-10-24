@@ -1,325 +1,834 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import { 
-  FiZap, FiVideo, FiEdit, FiDownload, FiCloud, 
-  FiShield, FiCpu, FiLayers, FiTrendingUp, 
-  FiSettings, FiUsers, FiGlobe 
-} from 'react-icons/fi';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+  Zap, 
+  Wand2, 
+  Layers, 
+  Globe, 
+  Shield, 
+  Gauge,
+  Users,
+  Palette,
+  Play,
+  Download,
+  Settings,
+  BarChart3,
+  Sparkles,
+  Film,
+  Mic,
+  Image,
+  Type,
+  Clock,
+  Cloud,
+  Smartphone,
+  Monitor,
+  Headphones,
+  Camera,
+  Edit3,
+  Sliders,
+  Crop,
+  Volume2,
+  Eye,
+  Cpu,
+  Database,
+  Lock,
+  Workflow
+} from 'lucide-react';
 
 const FeaturesPage = () => {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 60 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
-  };
+  return (
+    <div className="features-page pt-16">
+      {/* Section 1: Hero Section */}
+      <HeroSection />
+      
+      {/* Section 2: Core AI Features */}
+      <CoreFeaturesSection />
+      
+      {/* Section 3: Integrated Tools */}
+      <IntegratedToolsSection />
+      
+      {/* Section 4: Video Editing Capabilities */}
+      <VideoEditingSection />
+      
+      {/* Section 5: Advanced Features */}
+      <AdvancedFeaturesSection />
+      
+      {/* Section 6: Platform & Performance */}
+      <PlatformSection />
+      
+      {/* Section 7: Collaboration & Workflow */}
+      <CollaborationSection />
+      
+      {/* Section 8: Security & Enterprise */}
+      <SecuritySection />
+    </div>
+  );
+};
 
-  const mainFeatures = [
+// Section 1: Hero Section
+const HeroSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  return (
+    <section ref={ref} className="py-20 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
+      <div className="container relative z-10">
+        <motion.div
+          className="text-center max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.h1 
+            className="heading-xl gradient-text mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Powerful Features for Every Creator
+          </motion.h1>
+          
+          <motion.p 
+            className="text-lg text-secondary mb-8 leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Discover the comprehensive suite of AI-powered video creation tools that make 
+            professional video production accessible to everyone. From simple text prompts 
+            to complex video compositions, we've got you covered.
+          </motion.p>
+          
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <div className="text-center">
+              <Zap className="w-8 h-8 text-primary mx-auto mb-2" />
+              <div className="text-sm text-secondary">AI-Powered</div>
+            </div>
+            <div className="text-center">
+              <Globe className="w-8 h-8 text-primary mx-auto mb-2" />
+              <div className="text-sm text-secondary">Multi-Platform</div>
+            </div>
+            <div className="text-center">
+              <Shield className="w-8 h-8 text-primary mx-auto mb-2" />
+              <div className="text-sm text-secondary">Enterprise Ready</div>
+            </div>
+            <div className="text-center">
+              <Gauge className="w-8 h-8 text-primary mx-auto mb-2" />
+              <div className="text-sm text-secondary">Lightning Fast</div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Animated background elements */}
+      <motion.div
+        className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl"
+        animate={{ 
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{ duration: 4, repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl"
+        animate={{ 
+          scale: [1, 0.8, 1],
+          opacity: [0.2, 0.4, 0.2]
+        }}
+        transition={{ duration: 6, repeat: Infinity }}
+      />
+    </section>
+  );
+};
+
+// Section 2: Core AI Features
+const CoreFeaturesSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const features = [
     {
-      icon: <FiZap />,
-      title: 'AI-Powered Generation',
-      description: 'Transform text prompts into professional videos using advanced AI algorithms',
-      details: ['Natural language processing', 'Intelligent scene generation', 'Auto-synchronization']
+      icon: <Wand2 className="w-8 h-8" />,
+      title: 'Text-to-Video Generation',
+      description: 'Transform simple text prompts into professional videos using advanced AI algorithms.',
+      highlights: ['Natural language processing', 'Context understanding', 'Style adaptation']
     },
     {
-      icon: <FiVideo />,
-      title: 'Multi-Tool Integration',
-      description: 'Access 8+ professional video editing APIs and tools from one dashboard',
-      details: ['Shotstack API', 'Creatomate', 'Plainly Videos', 'Tavus', 'PromptClip', 'Lucy Edit', 'LTXVideo', 'Wan 2.1']
+      icon: <Sparkles className="w-8 h-8" />,
+      title: 'AI Scene Composition',
+      description: 'Automatically arrange scenes, transitions, and effects for optimal visual impact.',
+      highlights: ['Smart scene detection', 'Auto transitions', 'Dynamic pacing']
     },
     {
-      icon: <FiEdit />,
-      title: 'Advanced Editing',
-      description: 'Professional-grade editing tools with intuitive controls',
-      details: ['Timeline editing', 'Transitions & effects', 'Color grading', 'Audio mixing']
+      icon: <Palette className="w-8 h-8" />,
+      title: 'Intelligent Color Grading',
+      description: 'AI-powered color correction and grading that matches your content mood and style.',
+      highlights: ['Mood detection', 'Style matching', 'Professional looks']
     },
     {
-      icon: <FiDownload />,
-      title: 'High-Quality Export',
-      description: 'Export your videos in multiple formats and resolutions',
-      details: ['4K resolution', 'Multiple formats (MP4, MOV, WebM)', 'Custom bitrates']
-    },
-  ];
-
-  const technicalFeatures = [
-    { icon: <FiCpu />, title: 'GPU Acceleration', description: 'Lightning-fast processing with GPU support' },
-    { icon: <FiCloud />, title: 'Cloud Rendering', description: 'Powerful cloud infrastructure for quick renders' },
-    { icon: <FiShield />, title: 'Secure Storage', description: 'Enterprise-grade security for your content' },
-    { icon: <FiLayers />, title: 'Template Library', description: '1000+ professional templates to start from' },
-  ];
-
-  const aiCapabilities = [
-    'Text-to-video conversion',
-    'Automatic scene detection',
-    'Smart object tracking',
-    'Voice synthesis',
-    'Auto-captioning',
-    'Background removal',
-    'Style transfer',
-    'Intelligent cropping',
-  ];
-
-  const integrations = [
-    { name: 'Shotstack', category: 'Video API', description: 'Professional video rendering and editing' },
-    { name: 'Creatomate', category: 'Template Engine', description: 'Template-based video generation' },
-    { name: 'Plainly Videos', category: 'Automation', description: 'Automated video production workflows' },
-    { name: 'Tavus', category: 'AI Avatars', description: 'AI-powered personalized video avatars' },
-    { name: 'PromptClip', category: 'AI Generation', description: 'Open-source prompt-to-video tool' },
-    { name: 'Lucy Edit', category: 'AI Editing', description: 'Advanced AI video editing capabilities' },
-    { name: 'LTXVideo', category: 'Processing', description: 'Next-generation video processing' },
-    { name: 'Wan 2.1', category: 'Enhancement', description: 'AI-powered video enhancement' },
+      icon: <Mic className="w-8 h-8" />,
+      title: 'Voice Synthesis & Cloning',
+      description: 'Generate realistic voiceovers or clone existing voices for consistent branding.',
+      highlights: ['Multiple languages', 'Emotion control', 'Voice cloning']
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-dark-900">
-      <Navbar />
+    <section ref={ref} className="py-20">
+      <div className="container">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Core AI Features</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Harness the power of artificial intelligence to create videos that would typically require hours of manual work.
+          </p>
+        </motion.div>
 
-      {/* Section 1: Hero */}
-      <section className="pt-32 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div {...fadeInUp} className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 glow-text">
-              Powerful <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">Features</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-              Everything you need to create, edit, and publish professional videos with AI
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Section 2: Main Features */}
-      <section className="py-20 bg-dark-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {mainFeatures.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="glass p-8 rounded-xl hover:glow-effect transition-all duration-300"
-              >
-                <div className="text-5xl text-accent-primary mb-4">
+        <div className="grid md:grid-cols-2 gap-8">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="card group hover:border-primary/50 transition-all duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
+            >
+              <div className="flex items-start space-x-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center text-primary flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                   {feature.icon}
                 </div>
-                <h3 className="text-2xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-gray-300 mb-4">{feature.description}</p>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                  <p className="text-secondary mb-4 leading-relaxed">{feature.description}</p>
+                  <ul className="space-y-2">
+                    {feature.highlights.map((highlight, idx) => (
+                      <li key={idx} className="flex items-center text-sm">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3"></div>
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Section 3: Integrated Tools
+const IntegratedToolsSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const tools = [
+    {
+      name: 'Shotstack',
+      category: 'Video Editing API',
+      description: 'Professional video editing with timeline-based composition, effects, and transitions.',
+      features: ['Timeline editing', 'Video effects', 'Multi-format output', 'Cloud rendering'],
+      color: 'from-blue-500/20 to-blue-600/5'
+    },
+    {
+      name: 'Creatomate',
+      category: 'Automated Video Creation',
+      description: 'Template-based video generation with dynamic content and batch processing capabilities.',
+      features: ['Template system', 'Dynamic content', 'Batch processing', 'API integration'],
+      color: 'from-purple-500/20 to-purple-600/5'
+    },
+    {
+      name: 'Plainly Videos',
+      category: 'Scalable Video Generation',
+      description: 'Data-driven video creation for marketing campaigns and personalized content.',
+      features: ['Data integration', 'Custom templates', 'Scalable rendering', 'Analytics'],
+      color: 'from-green-500/20 to-green-600/5'
+    },
+    {
+      name: 'Tavus',
+      category: 'AI Avatar Generation',
+      description: 'Create realistic AI avatars and personalized video messages at scale.',
+      features: ['AI avatars', 'Voice synthesis', 'Personalization', 'Lip sync'],
+      color: 'from-orange-500/20 to-orange-600/5'
+    },
+    {
+      name: 'PromptClip',
+      category: 'Open Source Tool',
+      description: 'Community-driven video generation tool with customizable prompts and effects.',
+      features: ['Open source', 'Custom prompts', 'Community effects', 'Free to use'],
+      color: 'from-pink-500/20 to-pink-600/5'
+    },
+    {
+      name: 'Lucy Edit',
+      category: 'Advanced Editing',
+      description: 'Professional-grade editing tools with AI-assisted workflow optimization.',
+      features: ['Advanced editing', 'AI assistance', 'Workflow optimization', 'Pro tools'],
+      color: 'from-cyan-500/20 to-cyan-600/5'
+    },
+    {
+      name: 'LTXVideo',
+      category: 'AI Video Processing',
+      description: 'Lightricks-powered video enhancement and processing capabilities.',
+      features: ['Video enhancement', 'AI processing', 'Quality upscaling', 'Smart filters'],
+      color: 'from-yellow-500/20 to-yellow-600/5'
+    },
+    {
+      name: 'Wan 2.1',
+      category: 'Advanced AI Model',
+      description: 'Alibaba\'s cutting-edge AI model for sophisticated video generation and editing.',
+      features: ['Advanced AI', 'High quality', 'Complex scenes', 'Style transfer'],
+      color: 'from-red-500/20 to-red-600/5'
+    }
+  ];
+
+  return (
+    <section ref={ref} className="py-20 bg-secondary/20">
+      <div className="container">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Integrated AI Tools</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Access the best AI video generation and editing tools through our unified platform.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {tools.map((tool, index) => (
+            <motion.div
+              key={index}
+              className={`card relative overflow-hidden group hover:border-primary/50 transition-all duration-300`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${tool.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              
+              <div className="relative z-10">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold mb-1">{tool.name}</h3>
+                  <div className="text-primary text-sm font-medium">{tool.category}</div>
+                </div>
+                
+                <p className="text-secondary text-sm mb-4 leading-relaxed">{tool.description}</p>
+                
                 <ul className="space-y-2">
-                  {feature.details.map((detail, i) => (
-                    <li key={i} className="text-gray-400 flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-accent-primary rounded-full"></span>
-                      {detail}
+                  {tool.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center text-xs">
+                      <div className="w-1 h-1 bg-primary rounded-full mr-2"></div>
+                      {feature}
                     </li>
                   ))}
                 </ul>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
 
-      {/* Section 3: Technical Features */}
-      <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">Technical Excellence</h2>
-            <p className="text-xl text-gray-400">Built on cutting-edge technology</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {technicalFeatures.map((feature, index) => (
-              <motion.div
+// Section 4: Video Editing Capabilities
+const VideoEditingSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const [activeTab, setActiveTab] = useState(0);
+
+  const tabs = [
+    {
+      name: 'Timeline Editing',
+      icon: <Film className="w-5 h-5" />,
+      features: [
+        { icon: <Layers className="w-5 h-5" />, name: 'Multi-track timeline', desc: 'Professional timeline with unlimited tracks' },
+        { icon: <Crop className="w-5 h-5" />, name: 'Precision cutting', desc: 'Frame-accurate editing and trimming' },
+        { icon: <Edit3 className="w-5 h-5" />, name: 'Advanced transitions', desc: 'Smooth transitions and effects' },
+        { icon: <Clock className="w-5 h-5" />, name: 'Keyframe animation', desc: 'Precise animation control' }
+      ]
+    },
+    {
+      name: 'Effects & Filters',
+      icon: <Sparkles className="w-5 h-5" />,
+      features: [
+        { icon: <Palette className="w-5 h-5" />, name: 'Color grading', desc: 'Professional color correction tools' },
+        { icon: <Eye className="w-5 h-5" />, name: 'Visual effects', desc: 'Cinematic effects and filters' },
+        { icon: <Sliders className="w-5 h-5" />, name: 'Real-time preview', desc: 'See changes instantly' },
+        { icon: <Settings className="w-5 h-5" />, name: 'Custom presets', desc: 'Save and share your settings' }
+      ]
+    },
+    {
+      name: 'Audio Tools',
+      icon: <Volume2 className="w-5 h-5" />,
+      features: [
+        { icon: <Mic className="w-5 h-5" />, name: 'Voice enhancement', desc: 'AI-powered audio cleanup' },
+        { icon: <Headphones className="w-5 h-5" />, name: 'Music library', desc: 'Royalty-free music collection' },
+        { icon: <Volume2 className="w-5 h-5" />, name: 'Audio mixing', desc: 'Professional audio mixing tools' },
+        { icon: <Wand2 className="w-5 h-5" />, name: 'Auto sync', desc: 'Automatic audio synchronization' }
+      ]
+    }
+  ];
+
+  return (
+    <section ref={ref} className="py-20">
+      <div className="container">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Professional Video Editing</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Full-featured video editing capabilities that rival desktop applications, all in your browser.
+          </p>
+        </motion.div>
+
+        <div className="max-w-4xl mx-auto">
+          {/* Tab Navigation */}
+          <div className="flex flex-wrap justify-center mb-12 border-b border-gray-700">
+            {tabs.map((tab, index) => (
+              <button
                 key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="glass p-6 rounded-xl text-center hover:border-accent-primary hover:border-2 transition-all duration-300"
+                onClick={() => setActiveTab(index)}
+                className={`flex items-center space-x-2 px-6 py-3 font-medium transition-colors ${
+                  activeTab === index
+                    ? 'text-primary border-b-2 border-primary'
+                    : 'text-secondary hover:text-white'
+                }`}
               >
-                <div className="text-4xl text-accent-primary mb-4 flex justify-center">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
-              </motion.div>
+                {tab.icon}
+                <span>{tab.name}</span>
+              </button>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Section 4: AI Capabilities */}
-      <section className="py-20 bg-dark-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Tab Content */}
           <motion.div
+            key={activeTab}
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">AI Capabilities</h2>
-            <p className="text-xl text-gray-400">Powered by advanced machine learning</p>
+            <div className="grid md:grid-cols-2 gap-6">
+              {tabs[activeTab].features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  className="card group hover:border-primary/50 transition-all duration-300"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  whileHover={{ y: -3 }}
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg flex items-center justify-center text-primary flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      {feature.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">{feature.name}</h3>
+                      <p className="text-secondary text-sm">{feature.desc}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {aiCapabilities.map((capability, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="glass p-4 rounded-lg flex items-center gap-3 hover:bg-dark-700 transition-all duration-300"
-              >
-                <div className="w-2 h-2 bg-accent-primary rounded-full"></div>
-                <span className="text-gray-300">{capability}</span>
-              </motion.div>
-            ))}
-          </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
 
-      {/* Section 5: Integrations */}
-      <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">Integrated Tools & APIs</h2>
-            <p className="text-xl text-gray-400">All your favorite tools in one place</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {integrations.map((integration, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="glass p-6 rounded-xl hover:border-accent-primary hover:border-2 transition-all duration-300 cursor-pointer"
-              >
-                <div className="text-sm text-accent-secondary mb-2">{integration.category}</div>
-                <h3 className="text-lg font-semibold mb-2">{integration.name}</h3>
-                <p className="text-gray-400 text-sm">{integration.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+// Section 5: Advanced Features
+const AdvancedFeaturesSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
 
-      {/* Section 6: Workflow */}
-      <section className="py-20 bg-dark-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">Streamlined Workflow</h2>
-            <p className="text-xl text-gray-400">From prompt to professional video in minutes</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-            {[
-              { step: '1', title: 'Input Prompt', desc: 'Describe your video' },
-              { step: '2', title: 'Choose Tool', desc: 'Select AI engine' },
-              { step: '3', title: 'AI Processing', desc: 'Magic happens' },
-              { step: '4', title: 'Review & Edit', desc: 'Fine-tune results' },
-              { step: '5', title: 'Export', desc: 'Download & share' },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center relative"
-              >
-                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                  {item.step}
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                <p className="text-gray-400 text-sm">{item.desc}</p>
-                {index < 4 && (
-                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-accent-primary to-transparent"></div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+  const features = [
+    {
+      icon: <Cpu className="w-6 h-6" />,
+      title: 'AI-Powered Automation',
+      description: 'Intelligent automation for repetitive tasks',
+      items: ['Auto scene detection', 'Smart cropping', 'Content-aware editing', 'Batch processing']
+    },
+    {
+      icon: <BarChart3 className="w-6 h-6" />,
+      title: 'Advanced Analytics',
+      description: 'Comprehensive insights into your video performance',
+      items: ['Engagement metrics', 'Performance tracking', 'A/B testing', 'ROI analysis']
+    },
+    {
+      icon: <Cloud className="w-6 h-6" />,
+      title: 'Cloud Rendering',
+      description: 'Powerful cloud infrastructure for fast processing',
+      items: ['Distributed rendering', 'Auto-scaling', 'Priority queues', 'Real-time progress']
+    },
+    {
+      icon: <Workflow className="w-6 h-6" />,
+      title: 'Workflow Automation',
+      description: 'Streamline your video production pipeline',
+      items: ['Custom workflows', 'Approval processes', 'Auto publishing', 'Integration hooks']
+    }
+  ];
 
-      {/* Section 7: Use Cases */}
-      <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">Perfect For</h2>
-            <p className="text-xl text-gray-400">Whatever your video needs</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: <FiUsers />, title: 'Content Creators', desc: 'YouTube, TikTok, Instagram content' },
-              { icon: <FiTrendingUp />, title: 'Marketing Teams', desc: 'Ads, promotions, and campaigns' },
-              { icon: <FiGlobe />, title: 'Businesses', desc: 'Product demos, explainers, tutorials' },
-            ].map((useCase, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="glass p-8 rounded-xl text-center hover:glow-effect transition-all duration-300"
-              >
-                <div className="text-5xl text-accent-primary mb-4 flex justify-center">
-                  {useCase.icon}
-                </div>
-                <h3 className="text-2xl font-semibold mb-3">{useCase.title}</h3>
-                <p className="text-gray-400">{useCase.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+  return (
+    <section ref={ref} className="py-20 bg-gradient-to-r from-primary/5 via-transparent to-primary/5">
+      <div className="container">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Advanced Capabilities</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Enterprise-grade features that scale with your business needs.
+          </p>
+        </motion.div>
 
-      {/* Section 8: CTA */}
-      <section className="py-20 bg-dark-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-              Ready to Experience the Power?
-            </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Start creating professional videos with AI today
-            </p>
-            <a
-              href="/signup"
-              className="inline-block px-12 py-4 bg-gradient-to-r from-accent-primary to-accent-secondary text-white rounded-lg text-lg font-semibold hover:shadow-2xl hover:shadow-accent-primary/50 transition-all duration-300 transform hover:scale-105"
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="text-center group"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              Try It Free
-            </a>
-          </motion.div>
+              <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center text-black mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                {feature.icon}
+              </div>
+              
+              <h3 className="text-lg font-semibold mb-3">{feature.title}</h3>
+              <p className="text-secondary text-sm mb-4">{feature.description}</p>
+              
+              <ul className="space-y-2 text-left">
+                {feature.items.map((item, idx) => (
+                  <li key={idx} className="flex items-center text-sm">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3 flex-shrink-0"></div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
 
-      <Footer />
-    </div>
+// Section 6: Platform & Performance
+const PlatformSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const platforms = [
+    {
+      icon: <Monitor className="w-8 h-8" />,
+      name: 'Web Browser',
+      description: 'Full-featured editor in any modern browser',
+      features: ['No downloads required', 'Cross-platform', 'Auto-updates', 'Cloud sync']
+    },
+    {
+      icon: <Smartphone className="w-8 h-8" />,
+      name: 'Mobile Apps',
+      description: 'Edit on the go with our mobile applications',
+      features: ['iOS & Android', 'Touch optimized', 'Offline editing', 'Cloud sync']
+    },
+    {
+      icon: <Database className="w-8 h-8" />,
+      name: 'API Access',
+      description: 'Integrate video creation into your applications',
+      features: ['RESTful API', 'SDKs available', 'Webhooks', 'Documentation']
+    }
+  ];
+
+  const performance = [
+    { metric: 'Render Speed', value: '10x Faster', description: 'Than traditional software' },
+    { metric: 'Uptime', value: '99.9%', description: 'Guaranteed availability' },
+    { metric: 'Processing', value: 'Real-time', description: 'Live preview & editing' },
+    { metric: 'Storage', value: 'Unlimited', description: 'Cloud storage included' }
+  ];
+
+  return (
+    <section ref={ref} className="py-20 bg-secondary/30">
+      <div className="container">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Platform & Performance</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Built for speed, reliability, and accessibility across all devices and platforms.
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+          {/* Platforms */}
+          <div>
+            <h3 className="text-xl font-semibold mb-8">Available Platforms</h3>
+            <div className="space-y-6">
+              {platforms.map((platform, index) => (
+                <motion.div
+                  key={index}
+                  className="card group hover:border-primary/50 transition-all duration-300"
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center text-primary flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      {platform.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold mb-2">{platform.name}</h4>
+                      <p className="text-secondary text-sm mb-3">{platform.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {platform.features.map((feature, idx) => (
+                          <span key={idx} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Performance Metrics */}
+          <div>
+            <h3 className="text-xl font-semibold mb-8">Performance Metrics</h3>
+            <div className="grid grid-cols-2 gap-6">
+              {performance.map((metric, index) => (
+                <motion.div
+                  key={index}
+                  className="text-center p-6 bg-gray-900/50 rounded-xl border border-gray-700 hover:border-primary/50 transition-colors"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="text-2xl font-bold text-primary mb-2">{metric.value}</div>
+                  <div className="font-medium mb-1">{metric.metric}</div>
+                  <div className="text-xs text-secondary">{metric.description}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Section 7: Collaboration & Workflow
+const CollaborationSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const features = [
+    {
+      icon: <Users className="w-8 h-8" />,
+      title: 'Team Collaboration',
+      description: 'Work together seamlessly with your team members in real-time.',
+      points: ['Real-time editing', 'Comment system', 'Version control', 'Role management']
+    },
+    {
+      icon: <Settings className="w-8 h-8" />,
+      title: 'Project Management',
+      description: 'Organize and manage your video projects with powerful tools.',
+      points: ['Project templates', 'Asset libraries', 'Approval workflows', 'Deadline tracking']
+    },
+    {
+      icon: <Download className="w-8 h-8" />,
+      title: 'Export & Sharing',
+      description: 'Export in multiple formats and share directly to social platforms.',
+      points: ['Multiple formats', 'Social integration', 'Custom presets', 'Batch export']
+    }
+  ];
+
+  return (
+    <section ref={ref} className="py-20">
+      <div className="container">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Collaboration & Workflow</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Built for teams with features that streamline collaboration and project management.
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="card text-center group hover:border-primary/50 transition-all duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              whileHover={{ y: -8 }}
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center text-primary mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                {feature.icon}
+              </div>
+              
+              <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
+              <p className="text-secondary mb-6 leading-relaxed">{feature.description}</p>
+              
+              <ul className="space-y-3 text-left">
+                {feature.points.map((point, idx) => (
+                  <li key={idx} className="flex items-center">
+                    <div className="w-2 h-2 bg-primary rounded-full mr-3 flex-shrink-0"></div>
+                    <span className="text-sm">{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Section 8: Security & Enterprise
+const SecuritySection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const securityFeatures = [
+    {
+      icon: <Lock className="w-6 h-6" />,
+      title: 'Enterprise Security',
+      items: ['End-to-end encryption', 'SOC 2 compliance', 'GDPR compliant', 'Regular audits']
+    },
+    {
+      icon: <Shield className="w-6 h-6" />,
+      title: 'Data Protection',
+      items: ['Secure cloud storage', 'Automatic backups', 'Data residency options', 'Privacy controls']
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: 'Access Control',
+      items: ['SSO integration', 'Role-based permissions', 'Multi-factor auth', 'Audit logs']
+    },
+    {
+      icon: <Globe className="w-6 h-6" />,
+      title: 'Compliance',
+      items: ['HIPAA ready', 'ISO 27001', 'Privacy by design', 'Data portability']
+    }
+  ];
+
+  return (
+    <section ref={ref} className="py-20 bg-gradient-to-b from-gray-900 to-black">
+      <div className="container">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Enterprise Security & Compliance</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Built with enterprise-grade security and compliance features to protect your data and meet regulatory requirements.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          {securityFeatures.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="card text-center group hover:border-primary/50 transition-all duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
+            >
+              <div className="w-14 h-14 bg-gradient-primary rounded-xl flex items-center justify-center text-black mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                {feature.icon}
+              </div>
+              
+              <h3 className="font-semibold mb-4">{feature.title}</h3>
+              
+              <ul className="space-y-2 text-left">
+                {feature.items.map((item, idx) => (
+                  <li key={idx} className="flex items-center text-sm">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3 flex-shrink-0"></div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <motion.div
+          className="text-center bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-2xl p-8"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <h3 className="text-2xl font-semibold mb-4">Ready to Get Started?</h3>
+          <p className="text-secondary mb-6 max-w-2xl mx-auto">
+            Experience the power of AI-driven video creation. Start your free trial today and see how our platform can transform your video production workflow.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="btn btn-primary btn-lg">
+              <Play className="w-5 h-5 mr-2" />
+              Start Free Trial
+            </button>
+            <button className="btn btn-outline btn-lg">
+              <Calendar className="w-5 h-5 mr-2" />
+              Schedule Demo
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 

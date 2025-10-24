@@ -1,383 +1,615 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import { 
-  FiVideo, FiZap, FiTarget, FiAward, FiUsers, 
-  FiTrendingUp, FiPlay, FiCheck, FiStar 
-} from 'react-icons/fi';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import Background3D from '../components/3DBackground';
+  Play, 
+  Zap, 
+  Sparkles, 
+  Users, 
+  Award, 
+  ArrowRight,
+  Check,
+  Star,
+  Globe,
+  Shield
+} from 'lucide-react';
+
+// Components
+import ParticleBackground from '../components/effects/ParticleBackground';
+import AnimatedCounter from '../components/ui/AnimatedCounter';
+import TestimonialCard from '../components/ui/TestimonialCard';
+import FeatureCard from '../components/ui/FeatureCard';
+import PricingCard from '../components/ui/PricingCard';
 
 const HomePage = () => {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 60 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
-  };
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
 
-  const features = [
-    { icon: <FiZap />, title: 'AI-Powered', description: 'Advanced AI algorithms for smart video editing' },
-    { icon: <FiVideo />, title: 'Multiple Tools', description: '8+ integrated video editing tools and APIs' },
-    { icon: <FiTarget />, title: 'Prompt-Based', description: 'Create videos using simple text prompts' },
-    { icon: <FiAward />, title: 'Professional Quality', description: 'Export in HD and 4K resolutions' },
-  ];
+  return (
+    <div className="homepage">
+      {/* Section 1: Hero Section */}
+      <section className="hero-section relative min-h-screen flex items-center justify-center overflow-hidden">
+        <ParticleBackground />
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/80" />
+        
+        <motion.div 
+          className="container relative z-10 text-center"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <motion.h1 
+            className="heading-xl gradient-text mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+          >
+            Create Stunning Videos with AI
+          </motion.h1>
+          
+          <motion.p 
+            className="text-lg text-secondary max-w-2xl mx-auto mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          >
+            Transform your ideas into professional videos using cutting-edge AI technology. 
+            Integrated with Shotstack, Creatomate, Plainly, Tavus, and more powerful tools.
+          </motion.p>
+          
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.6 }}
+          >
+            <Link to="/signup" className="btn btn-primary btn-lg animate-glow">
+              <Play className="w-5 h-5 mr-2" />
+              Start Creating Now
+            </Link>
+            <Link to="/features" className="btn btn-outline btn-lg">
+              <Sparkles className="w-5 h-5 mr-2" />
+              Explore Features
+            </Link>
+          </motion.div>
+          
+          <motion.div 
+            className="mt-12 flex justify-center items-center space-x-8 text-sm text-muted"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.8 }}
+          >
+            <div className="flex items-center">
+              <Check className="w-4 h-4 text-primary mr-2" />
+              No Credit Card Required
+            </div>
+            <div className="flex items-center">
+              <Check className="w-4 h-4 text-primary mr-2" />
+              Free Trial Available
+            </div>
+            <div className="flex items-center">
+              <Check className="w-4 h-4 text-primary mr-2" />
+              Cancel Anytime
+            </div>
+          </motion.div>
+        </motion.div>
 
-  const tools = [
-    { name: 'Shotstack API', description: 'Professional video rendering' },
-    { name: 'Creatomate', description: 'Template-based video creation' },
-    { name: 'Plainly Videos', description: 'Automated video generation' },
-    { name: 'Tavus AI', description: 'AI avatar video creation' },
-    { name: 'PromptClip', description: 'Prompt to video conversion' },
-    { name: 'Lucy Edit', description: 'Advanced AI editing' },
-    { name: 'LTXVideo', description: 'Next-gen video processing' },
-    { name: 'Wan 2.1', description: 'AI-powered video enhancement' },
-  ];
+        {/* Floating Elements */}
+        <motion.div
+          className="absolute top-20 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl"
+          animate={{ 
+            y: [0, -20, 0],
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl"
+          animate={{ 
+            y: [0, 20, 0],
+            scale: [1, 0.9, 1],
+            opacity: [0.2, 0.4, 0.2]
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </section>
 
-  const pricingPlans = [
-    {
-      name: 'Free',
-      price: '$0',
-      features: ['5 videos/month', 'HD quality', 'Basic tools', 'Community support'],
-    },
-    {
-      name: 'Pro',
-      price: '$29',
-      features: ['Unlimited videos', '4K quality', 'All tools', 'Priority support', 'API access'],
-      popular: true,
-    },
-    {
-      name: 'Enterprise',
-      price: 'Custom',
-      features: ['Custom solutions', 'Dedicated support', 'White label', 'SLA guarantee', 'Training'],
-    },
-  ];
+      {/* Section 2: Stats Section */}
+      <StatsSection />
 
-  const testimonials = [
-    { name: 'Sarah Johnson', role: 'Content Creator', text: 'This platform revolutionized my video workflow!', rating: 5 },
-    { name: 'Mike Chen', role: 'Marketing Director', text: 'Best AI video tool I\'ve ever used. Highly recommended!', rating: 5 },
-    { name: 'Emily Davis', role: 'YouTuber', text: 'Creates professional videos in minutes, not hours!', rating: 5 },
-  ];
+      {/* Section 3: Features Overview */}
+      <FeaturesOverviewSection />
+
+      {/* Section 4: AI Tools Integration */}
+      <AIToolsSection />
+
+      {/* Section 5: How It Works */}
+      <HowItWorksSection />
+
+      {/* Section 6: Testimonials */}
+      <TestimonialsSection />
+
+      {/* Section 7: Pricing */}
+      <PricingSection />
+
+      {/* Section 8: CTA Section */}
+      <CTASection />
+    </div>
+  );
+};
+
+// Section 2: Stats Section
+const StatsSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
 
   const stats = [
-    { number: '50K+', label: 'Active Users' },
-    { number: '1M+', label: 'Videos Created' },
-    { number: '99.9%', label: 'Uptime' },
-    { number: '24/7', label: 'Support' },
+    { number: 50000, label: 'Videos Created', suffix: '+' },
+    { number: 10000, label: 'Happy Users', suffix: '+' },
+    { number: 99, label: 'Uptime', suffix: '%' },
+    { number: 24, label: 'Support', suffix: '/7' }
   ];
 
   return (
-    <div className="min-h-screen bg-dark-900">
-      <Navbar />
-
-      {/* Section 1: Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <Background3D />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1 
-            {...fadeInUp}
-            className="text-5xl md:text-7xl font-bold mb-6 glow-text"
-          >
-            AI-Powered Video Editing
-            <br />
-            <span className="bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-tertiary bg-clip-text text-transparent">
-              Reimagined
-            </span>
-          </motion.h1>
-          <motion.p 
-            {...fadeInUp}
-            transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto"
-          >
-            Transform your ideas into stunning videos with simple text prompts. 
-            No editing skills required.
-          </motion.p>
-          <motion.div 
-            {...fadeInUp}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Link 
-              to="/signup"
-              className="px-8 py-4 bg-gradient-to-r from-accent-primary to-accent-secondary text-white rounded-lg text-lg font-semibold hover:shadow-2xl hover:shadow-accent-primary/50 transition-all duration-300 transform hover:scale-105"
+    <section ref={ref} className="py-20 bg-secondary/50">
+      <div className="container">
+        <motion.div 
+          className="grid grid-cols-2 md:grid-cols-4 gap-8"
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          {stats.map((stat, index) => (
+            <motion.div
+              key={index}
+              className="text-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              Start Creating Free
-            </Link>
-            <Link 
-              to="/features"
-              className="px-8 py-4 border-2 border-accent-primary text-white rounded-lg text-lg font-semibold hover:bg-accent-primary transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                <AnimatedCounter 
+                  end={stat.number} 
+                  duration={2}
+                  suffix={stat.suffix}
+                  start={inView}
+                />
+              </div>
+              <div className="text-secondary">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+// Section 3: Features Overview
+const FeaturesOverviewSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const features = [
+    {
+      icon: <Zap className="w-8 h-8" />,
+      title: 'AI-Powered Generation',
+      description: 'Create videos from simple text prompts using advanced AI algorithms'
+    },
+    {
+      icon: <Globe className="w-8 h-8" />,
+      title: 'Multiple Integrations',
+      description: 'Access Shotstack, Creatomate, Plainly, Tavus, and more in one platform'
+    },
+    {
+      icon: <Shield className="w-8 h-8" />,
+      title: 'Enterprise Security',
+      description: 'Bank-level security with encrypted data and secure API connections'
+    },
+    {
+      icon: <Users className="w-8 h-8" />,
+      title: 'Team Collaboration',
+      description: 'Work together with your team on video projects in real-time'
+    }
+  ];
+
+  return (
+    <section ref={ref} className="py-20">
+      <div className="container">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Powerful Features</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Everything you need to create professional videos with AI
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <FiPlay /> Watch Demo
-            </Link>
-          </motion.div>
+              <FeatureCard {...feature} />
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
 
-      {/* Section 2: Features Grid */}
-      <section className="py-20 bg-dark-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">
-              Powerful Features
-            </h2>
-            <p className="text-xl text-gray-400">
-              Everything you need to create amazing videos
-            </p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="glass p-6 rounded-xl hover:glow-effect transition-all duration-300 transform hover:scale-105"
-              >
-                <div className="text-4xl text-accent-primary mb-4">
-                  {feature.icon}
+// Section 4: AI Tools Integration
+const AIToolsSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const tools = [
+    {
+      name: 'Shotstack',
+      description: 'Professional video editing API',
+      logo: '/images/shotstack-logo.png',
+      features: ['Timeline editing', 'Effects & transitions', 'Multi-format output']
+    },
+    {
+      name: 'Creatomate',
+      description: 'Automated video creation',
+      logo: '/images/creatomate-logo.png',
+      features: ['Template-based', 'Dynamic content', 'Batch processing']
+    },
+    {
+      name: 'Plainly Videos',
+      description: 'Scalable video generation',
+      logo: '/images/plainly-logo.png',
+      features: ['Data-driven videos', 'Custom templates', 'API integration']
+    },
+    {
+      name: 'Tavus',
+      description: 'AI avatar videos',
+      logo: '/images/tavus-logo.png',
+      features: ['Realistic avatars', 'Voice synthesis', 'Personalization']
+    }
+  ];
+
+  return (
+    <section ref={ref} className="py-20 bg-secondary/30">
+      <div className="container">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Integrated AI Tools</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Access the best AI video generation tools through our unified platform
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {tools.map((tool, index) => (
+            <motion.div
+              key={index}
+              className="card hover:border-primary/50 transition-all duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ scale: 1.02, y: -5 }}
+            >
+              <div className="h-16 w-16 bg-primary/10 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                <span className="text-primary font-bold text-lg">{tool.name[0]}</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-2 text-center">{tool.name}</h3>
+              <p className="text-secondary text-sm text-center mb-4">{tool.description}</p>
+              <ul className="space-y-2">
+                {tool.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-center text-sm">
+                    <Check className="w-4 h-4 text-primary mr-2 flex-shrink-0" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Section 5: How It Works
+const HowItWorksSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const steps = [
+    {
+      step: '01',
+      title: 'Describe Your Video',
+      description: 'Simply type what you want to create. Our AI understands natural language.'
+    },
+    {
+      step: '02',
+      title: 'Choose Your Tool',
+      description: 'Select from Shotstack, Creatomate, Plainly, Tavus, or other integrated tools.'
+    },
+    {
+      step: '03',
+      title: 'AI Generates Content',
+      description: 'Our AI processes your request and creates professional video content.'
+    },
+    {
+      step: '04',
+      title: 'Download & Share',
+      description: 'Get your finished video in multiple formats, ready to share anywhere.'
+    }
+  ];
+
+  return (
+    <section ref={ref} className="py-20">
+      <div className="container">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">How It Works</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Create professional videos in just four simple steps
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              className="text-center relative"
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+            >
+              <div className="relative mb-6">
+                <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center text-black font-bold text-lg mx-auto mb-4">
+                  {step.step}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section 3: How It Works */}
-      <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">
-              How It Works
-            </h2>
-            <p className="text-xl text-gray-400">
-              Create professional videos in 3 simple steps
-            </p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {[
-              { step: '01', title: 'Enter Your Prompt', desc: 'Describe your video idea in simple text' },
-              { step: '02', title: 'Choose Your Tool', desc: 'Select from 8+ AI-powered editing tools' },
-              { step: '03', title: 'Get Your Video', desc: 'Download your professional video in minutes' },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2 }}
-                className="text-center"
-              >
-                <div className="text-6xl font-bold bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent mb-4">
-                  {item.step}
-                </div>
-                <h3 className="text-2xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-gray-400">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Tools Showcase */}
-      <section className="py-20 bg-dark-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">
-              Integrated Tools & APIs
-            </h2>
-            <p className="text-xl text-gray-400">
-              Access the best AI video tools in one platform
-            </p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tools.map((tool, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="glass p-6 rounded-xl hover:border-accent-primary hover:border-2 transition-all duration-300 cursor-pointer"
-              >
-                <h3 className="text-lg font-semibold mb-2 text-accent-primary">
-                  {tool.name}
-                </h3>
-                <p className="text-gray-400 text-sm">{tool.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section 5: Pricing */}
-      <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">
-              Simple, Transparent Pricing
-            </h2>
-            <p className="text-xl text-gray-400">
-              Choose the plan that fits your needs
-            </p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pricingPlans.map((plan, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className={`glass p-8 rounded-xl ${plan.popular ? 'border-2 border-accent-primary glow-effect' : ''} relative`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent-primary to-accent-secondary px-4 py-1 rounded-full text-sm font-semibold">
-                    Most Popular
-                  </div>
+                {index < steps.length - 1 && (
+                  <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-primary to-transparent" />
                 )}
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold mb-6 text-accent-primary">
-                  {plan.price}
-                  {plan.price !== 'Custom' && <span className="text-lg text-gray-400">/month</span>}
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <FiCheck className="text-accent-primary" />
-                      <span className="text-gray-300">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/signup"
-                  className={`block w-full py-3 rounded-lg text-center font-semibold transition-all duration-300 ${
-                    plan.popular
-                      ? 'bg-gradient-to-r from-accent-primary to-accent-secondary text-white hover:shadow-lg hover:shadow-accent-primary/50'
-                      : 'border border-accent-primary text-white hover:bg-accent-primary'
-                  }`}
-                >
-                  Get Started
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+              <h3 className="text-lg font-semibold mb-3">{step.title}</h3>
+              <p className="text-secondary">{step.description}</p>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
 
-      {/* Section 6: Testimonials */}
-      <section className="py-20 bg-dark-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 glow-text">
-              What Our Users Say
-            </h2>
-            <p className="text-xl text-gray-400">
-              Join thousands of satisfied creators
-            </p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="glass p-6 rounded-xl"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <FiStar key={i} className="text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-300 mb-4">"{testimonial.text}"</p>
-                <div>
-                  <p className="font-semibold">{testimonial.name}</p>
-                  <p className="text-sm text-gray-400">{testimonial.role}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+// Section 6: Testimonials
+const TestimonialsSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
 
-      {/* Section 7: Stats */}
-      <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="text-4xl md:text-5xl font-bold text-accent-primary mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-400">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+  const testimonials = [
+    {
+      name: 'Sarah Johnson',
+      role: 'Marketing Director',
+      company: 'TechCorp',
+      content: 'This platform revolutionized our video marketing. We create professional videos in minutes instead of hours.',
+      avatar: '/images/avatar1.jpg',
+      rating: 5
+    },
+    {
+      name: 'Mike Chen',
+      role: 'Content Creator',
+      company: 'Independent',
+      content: 'The AI tools integration is seamless. I can access multiple platforms without switching between different apps.',
+      avatar: '/images/avatar2.jpg',
+      rating: 5
+    },
+    {
+      name: 'Emily Davis',
+      role: 'Social Media Manager',
+      company: 'BrandCo',
+      content: 'Amazing results with minimal effort. The quality of AI-generated videos exceeds our expectations.',
+      avatar: '/images/avatar3.jpg',
+      rating: 5
+    }
+  ];
 
-      {/* Section 8: CTA */}
-      <section className="py-20 bg-dark-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-              Ready to Create Amazing Videos?
-            </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Join thousands of creators and start your journey today
-            </p>
-            <Link
-              to="/signup"
-              className="inline-block px-12 py-4 bg-gradient-to-r from-accent-primary to-accent-secondary text-white rounded-lg text-lg font-semibold hover:shadow-2xl hover:shadow-accent-primary/50 transition-all duration-300 transform hover:scale-105"
+  return (
+    <section ref={ref} className="py-20 bg-secondary/20">
+      <div className="container">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">What Our Users Say</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Join thousands of creators who trust our platform
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              Get Started for Free
+              <TestimonialCard {...testimonial} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Section 7: Pricing
+const PricingSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const plans = [
+    {
+      name: 'Starter',
+      price: 0,
+      period: 'month',
+      description: 'Perfect for getting started',
+      features: [
+        '5 videos per month',
+        'Basic AI tools',
+        'Standard quality',
+        'Community support'
+      ],
+      popular: false
+    },
+    {
+      name: 'Pro',
+      price: 29,
+      period: 'month',
+      description: 'For professional creators',
+      features: [
+        'Unlimited videos',
+        'All AI tools access',
+        'HD & 4K quality',
+        'Priority support',
+        'Custom branding',
+        'Team collaboration'
+      ],
+      popular: true
+    },
+    {
+      name: 'Enterprise',
+      price: 99,
+      period: 'month',
+      description: 'For large organizations',
+      features: [
+        'Everything in Pro',
+        'Custom integrations',
+        'Dedicated support',
+        'SLA guarantee',
+        'Advanced analytics',
+        'White-label solution'
+      ],
+      popular: false
+    }
+  ];
+
+  return (
+    <section ref={ref} className="py-20">
+      <div className="container">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg mb-4">Simple, Transparent Pricing</h2>
+          <p className="text-lg text-secondary max-w-2xl mx-auto">
+            Choose the plan that fits your needs. Upgrade or downgrade anytime.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {plans.map((plan, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <PricingCard {...plan} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Section 8: CTA Section
+const CTASection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  return (
+    <section ref={ref} className="py-20 bg-gradient-primary relative overflow-hidden">
+      <div className="absolute inset-0 bg-black/20" />
+      <div className="container relative z-10">
+        <motion.div 
+          className="text-center max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="heading-lg text-black mb-6">
+            Ready to Create Amazing Videos?
+          </h2>
+          <p className="text-lg text-black/80 mb-8">
+            Join thousands of creators who are already using AI to produce stunning videos. 
+            Start your free trial today and experience the future of video creation.
+          </p>
+          
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Link to="/signup" className="btn bg-black text-white hover:bg-gray-800 btn-lg">
+              <Play className="w-5 h-5 mr-2" />
+              Start Free Trial
+            </Link>
+            <Link to="/contact" className="btn bg-transparent text-black border-black hover:bg-black/10 btn-lg">
+              <Users className="w-5 h-5 mr-2" />
+              Contact Sales
             </Link>
           </motion.div>
-        </div>
-      </section>
 
-      <Footer />
-    </div>
+          <motion.div 
+            className="mt-8 text-black/70 text-sm"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            No credit card required • Cancel anytime • 14-day free trial
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Background Elements */}
+      <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl" />
+      <div className="absolute bottom-10 right-10 w-24 h-24 bg-white/10 rounded-full blur-lg" />
+    </section>
   );
 };
 
