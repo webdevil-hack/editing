@@ -1,8 +1,9 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
+
+// Pages
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import FeaturesPage from './pages/FeaturesPage';
@@ -10,22 +11,25 @@ import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import Dashboard from './pages/Dashboard';
-import ProtectedRoute from './components/ProtectedRoute';
+
+// Styles
 import './App.css';
 
 function App() {
   return (
     <AuthProvider>
-      <div className="App">
-        <Navbar />
-        <main>
+      <Router>
+        <div className="App">
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/features" element={<FeaturesPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            
+            {/* Protected Routes */}
             <Route 
               path="/dashboard" 
               element={
@@ -35,9 +39,8 @@ function App() {
               } 
             />
           </Routes>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </Router>
     </AuthProvider>
   );
 }
