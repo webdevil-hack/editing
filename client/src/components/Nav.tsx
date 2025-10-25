@@ -10,6 +10,7 @@ export default function Nav() {
         <nav className="flex items-center gap-2">
           <NavLink to="/" className={linkClass}>Home</NavLink>
           <NavLink to="/features" className={linkClass}>Features</NavLink>
+          <NavLink to="/portfolio" className={linkClass}>Portfolio</NavLink>
           <NavLink to="/about" className={linkClass}>About</NavLink>
           <NavLink to="/contact" className={linkClass}>Contact</NavLink>
           <NavLink to="/dashboard" className={({ isActive }) => `ml-2 px-4 py-2 rounded-full shadow-glow bg-primary/20 border border-primary/40 ${isActive ? 'text-white' : 'text-primary hover:bg-primary/30'}`}>Dashboard</NavLink>

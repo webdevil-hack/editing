@@ -1,6 +1,7 @@
 import { Suspense, useState } from 'react'
 import { Routes, Route, NavLink } from 'react-router-dom'
 import KeysPage from './pages/Keys'
+import PortfolioPage from './pages/PortfolioPage'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stars } from '@react-three/drei'
 import { useAuth } from './context/auth'
@@ -29,6 +30,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           <nav className="flex gap-6 text-sm">
             <NavLink to="/" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>Home</NavLink>
             <NavLink to="/features" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>Features</NavLink>
+            <NavLink to="/portfolio" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>Portfolio</NavLink>
             <NavLink to="/about" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>About</NavLink>
             <NavLink to="/contact" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>Contact</NavLink>
             <NavLink to="/login" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>Login</NavLink>
@@ -204,6 +206,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/features" element={<FeaturesPage />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
