@@ -1,0 +1,1 @@
+{"version":3,"file":"lucyedit.d.ts","sourceRoot":"","sources":["../../src/providers/lucyedit.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,eAAe,EAAE,gBAAgB,EAAE,iBAAiB,EAAE,eAAe,EAAE,MAAM,WAAW,CAAC;AAElG,qBAAa,eAAgB,YAAW,eAAe;IAC/C,SAAS,CAAC,GAAG,EAAE,gBAAgB,EAAE,OAAO,EAAE,MAAM,GAAG,OAAO,CAAC,iBAAiB,CAAC;IAG7E,SAAS,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAAC,eAAe,CAAC;CAGzD"}
