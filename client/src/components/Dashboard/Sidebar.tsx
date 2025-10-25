@@ -1,130 +1,141 @@
 import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
-  LayoutDashboard, 
-  Video, 
-  Settings, 
+  BarChart3, 
   User, 
+  Settings, 
   LogOut,
-  ChevronLeft,
-  ChevronRight,
+  Video,
   Zap,
-  Palette,
   Scissors,
-  Camera,
-  Wand2,
+  UserCircle,
   Sparkles,
-  Film,
-  Play,
-  Star
+  Wand2,
+  Star,
+  Cpu,
+  Bot,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
-  const apiServices = [
-    { id: 'shotstack', name: 'ShotStack', icon: Video, color: 'text-blue-400' },
-    { id: 'creatomate', name: 'CreatoMate', icon: Palette, color: 'text-purple-400' },
-    { id: 'pandly', name: 'Pandly Videos', icon: Scissors, color: 'text-green-400' },
-    { id: 'tavus', name: 'Tavus', icon: Camera, color: 'text-orange-400' },
-    { id: 'promptclip', name: 'PromptClip', icon: Wand2, color: 'text-pink-400' },
-    { id: 'luckyedit', name: 'LuckyEdit', icon: Sparkles, color: 'text-yellow-400' },
-    { id: 'ltx', name: 'LTX Video', icon: Film, color: 'text-red-400' },
-    { id: 'vant', name: 'Vant 2.1', icon: Play, color: 'text-cyan-400' }
+  const mainNavItems = [
+    { name: 'Overview', path: '/dashboard', icon: BarChart3, color: 'text-blue-400' },
+    { name: 'Profile', path: '/dashboard/profile', icon: User, color: 'text-green-400' },
+    { name: 'Settings', path: '/dashboard/settings', icon: Settings, color: 'text-purple-400' },
   ];
 
-  const mainNavItems = [
-    { path: '/dashboard', name: 'Overview', icon: LayoutDashboard },
-    { path: '/dashboard/profile', name: 'Profile', icon: User },
-    { path: '/dashboard/settings', name: 'Settings', icon: Settings },
+  const apiItems = [
+    { name: 'ShotStack', path: '/dashboard/shotstack', icon: Video, color: 'text-red-400' },
+    { name: 'CreatoMate', path: '/dashboard/creatomate', icon: Zap, color: 'text-yellow-400' },
+    { name: 'Pandly Videos', path: '/dashboard/pandly', icon: Scissors, color: 'text-pink-400' },
+    { name: 'Tavus', path: '/dashboard/tavus', icon: UserCircle, color: 'text-indigo-400' },
+    { name: 'PromptClip', path: '/dashboard/promptclip', icon: Sparkles, color: 'text-cyan-400' },
+    { name: 'LuckyEdit', path: '/dashboard/luckyedit', icon: Wand2, color: 'text-orange-400' },
+    { name: 'LTX Video', path: '/dashboard/ltxvideo', icon: Star, color: 'text-emerald-400' },
+    { name: 'Vant 2.1', path: '/dashboard/vant', icon: Cpu, color: 'text-violet-400' },
   ];
+
+  const isActive = (path: string) => {
+    if (path === '/dashboard') {
+      return location.pathname === '/dashboard';
+    }
+    return location.pathname.startsWith(path);
+  };
 
   return (
-    <div className={`bg-gray-900 border-r border-gray-800 transition-all duration-300 ${
+    <div className={`bg-gray-900 border-r border-gray-700 transition-all duration-300 ${
       isCollapsed ? 'w-16' : 'w-64'
     }`}>
       {/* Header */}
-      <div className="p-4 border-b border-gray-800">
+      <div className="p-4 border-b border-gray-700">
         <div className="flex items-center justify-between">
           {!isCollapsed && (
             <h2 className="text-xl font-bold text-white">AI Video Studio</h2>
           )}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-2 rounded-lg hover:bg-gray-800 transition-colors"
+            className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
           >
-            {isCollapsed ? <ChevronRight className="w-5 h-5 text-gray-400" /> : <ChevronLeft className="w-5 h-5 text-gray-400" />}
+            {isCollapsed ? (
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+            ) : (
+              <ChevronLeft className="w-4 h-4 text-gray-400" />
+            )}
           </button>
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="p-4 space-y-2">
-        {/* Main Navigation */}
-        <div className="space-y-1">
+      {/* Main Navigation */}
+      <div className="p-4">
+        <div className="space-y-2">
+          <h3 className={`text-xs font-semibold text-gray-400 uppercase tracking-wider ${
+            isCollapsed ? 'hidden' : 'block'
+          }`}>
+            Main
+          </h3>
           {mainNavItems.map((item) => {
             const Icon = item.icon;
-            const isActive = location.pathname === item.path;
             return (
-              <NavLink
-                key={item.path}
+              <Link
+                key={item.name}
                 to={item.path}
-                className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
-                  isActive
+                className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 group ${
+                  isActive(item.path)
                     ? 'bg-blue-600 text-white'
                     : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                 }`}
               >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {!isCollapsed && <span className="text-sm font-medium">{item.name}</span>}
-              </NavLink>
+                <Icon className={`w-5 h-5 ${item.color} ${isActive(item.path) ? 'text-white' : ''}`} />
+                {!isCollapsed && (
+                  <span className="ml-3 font-medium">{item.name}</span>
+                )}
+              </Link>
             );
           })}
         </div>
+      </div>
 
-        {/* API Services Section */}
-        <div className="pt-4">
-          {!isCollapsed && (
-            <div className="flex items-center space-x-2 mb-3">
-              <Star className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider">API Services</span>
-            </div>
-          )}
-          
-          <div className="space-y-1">
-            {apiServices.map((service) => {
-              const Icon = service.icon;
-              const isActive = location.pathname === `/dashboard/${service.id}`;
-              return (
-                <NavLink
-                  key={service.id}
-                  to={`/dashboard/${service.id}`}
-                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
-                    isActive
-                      ? 'bg-gray-800 text-white border-l-2 border-blue-500'
-                      : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                  }`}
-                >
-                  <Icon className={`w-5 h-5 flex-shrink-0 ${service.color}`} />
-                  {!isCollapsed && (
-                    <div className="flex-1 min-w-0">
-                      <span className="text-sm font-medium block truncate">{service.name}</span>
-                      <span className="text-xs text-gray-500">API Service</span>
-                    </div>
-                  )}
-                </NavLink>
-              );
-            })}
-          </div>
+      {/* API Services */}
+      <div className="p-4 border-t border-gray-700">
+        <div className="space-y-2">
+          <h3 className={`text-xs font-semibold text-gray-400 uppercase tracking-wider ${
+            isCollapsed ? 'hidden' : 'block'
+          }`}>
+            AI Services
+          </h3>
+          {apiItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 group ${
+                  isActive(item.path)
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                }`}
+              >
+                <Icon className={`w-5 h-5 ${item.color} ${isActive(item.path) ? 'text-white' : ''}`} />
+                {!isCollapsed && (
+                  <span className="ml-3 font-medium">{item.name}</span>
+                )}
+              </Link>
+            );
+          })}
         </div>
-      </nav>
+      </div>
 
-      {/* Footer */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800">
-        <button className="flex items-center space-x-3 w-full px-3 py-2 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
-          <LogOut className="w-5 h-5" />
-          {!isCollapsed && <span className="text-sm font-medium">Logout</span>}
+      {/* Logout */}
+      <div className="absolute bottom-4 left-4 right-4">
+        <button className="flex items-center w-full px-3 py-2 text-gray-300 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-200 group">
+          <LogOut className="w-5 h-5 text-red-400 group-hover:text-white" />
+          {!isCollapsed && (
+            <span className="ml-3 font-medium">Logout</span>
+          )}
         </button>
       </div>
     </div>
