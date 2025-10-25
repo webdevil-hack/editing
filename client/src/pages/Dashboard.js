@@ -9,7 +9,6 @@ import {
   BarChart3, 
   Zap,
   Play,
-  Pause,
   Download,
   Share2,
   Edit3,
@@ -18,13 +17,50 @@ import {
   Clock,
   CheckCircle,
   AlertCircle,
-  Loader
+  Loader,
+  Menu,
+  X,
+  Home,
+  LogOut,
+  CreditCard,
+  Activity,
+  TrendingUp,
+  Users,
+  Film,
+  Sparkles,
+  Wand2,
+  Scissors,
+  Palette,
+  Camera,
+  Mic,
+  Music,
+  Image,
+  FileText,
+  Globe,
+  Shield,
+  Star,
+  ChevronRight,
+  ChevronDown,
+  Bell,
+  Search,
+  Filter,
+  Grid,
+  List,
+  RefreshCw,
+  Pause,
+  PlayCircle,
+  Square,
+  Circle,
+  Triangle,
+  Hexagon,
+  Octagon
 } from 'lucide-react';
 import './Dashboard.css';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState('projects');
+  const [activeTab, setActiveTab] = useState('overview');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -35,6 +71,120 @@ const Dashboard = () => {
     prompt: '',
     apiUsed: 'shotstack'
   });
+
+  // API configurations with detailed information
+  const apis = [
+    {
+      id: 'shotstack',
+      name: 'ShortStack',
+      status: 'connected',
+      color: '#00d4ff',
+      description: 'Professional video generation with advanced editing',
+      features: ['HD/4K Video', 'Multiple Formats', 'Real-time Processing'],
+      icon: '🎬',
+      category: 'Video Generation',
+      credits: 150,
+      usage: 45
+    },
+    {
+      id: 'creatomate',
+      name: 'CreatoMate',
+      status: 'connected',
+      color: '#ff6b35',
+      description: 'Template-based video creation with motion graphics',
+      features: ['Templates', 'Motion Graphics', 'Brand Integration'],
+      icon: '🎨',
+      category: 'Template Editing',
+      credits: 200,
+      usage: 78
+    },
+    {
+      id: 'plainly',
+      name: 'Pandly Videos',
+      status: 'connected',
+      color: '#9c27b0',
+      description: 'Automated video production with AI assistance',
+      features: ['AI Automation', 'Stock Assets', 'Voiceover'],
+      icon: '🤖',
+      category: 'AI Automation',
+      credits: 100,
+      usage: 32
+    },
+    {
+      id: 'tavus',
+      name: 'Tavas',
+      status: 'connected',
+      color: '#4caf50',
+      description: 'AI avatar video generation and personalization',
+      features: ['AI Avatars', 'Personalization', 'Multi-language'],
+      icon: '👤',
+      category: 'Avatar Generation',
+      credits: 300,
+      usage: 120
+    },
+    {
+      id: 'promptclip',
+      name: 'PromptClip',
+      status: 'available',
+      color: '#ff9800',
+      description: 'Open-source video generation from text prompts',
+      features: ['Open Source', 'Text-to-Video', 'Customizable'],
+      icon: '🔧',
+      category: 'Open Source',
+      credits: 0,
+      usage: 0
+    },
+    {
+      id: 'luckyedit',
+      name: 'LuckyEdit',
+      status: 'available',
+      color: '#e91e63',
+      description: 'AI-powered video editing with beat sync',
+      features: ['Beat Sync', 'Auto Edit', 'Motion Effects'],
+      icon: '🎵',
+      category: 'AI Editing',
+      credits: 0,
+      usage: 0
+    },
+    {
+      id: 'ltxvideo',
+      name: 'LTX Video',
+      status: 'available',
+      color: '#2196f3',
+      description: 'Advanced text-to-video with camera motion',
+      features: ['4K Output', 'Camera Motion', 'High Quality'],
+      icon: '🎥',
+      category: 'Advanced Generation',
+      credits: 0,
+      usage: 0
+    },
+    {
+      id: 'vant21',
+      name: 'Vant 2.1',
+      status: 'available',
+      color: '#795548',
+      description: 'Real-time preview with facial retargeting',
+      features: ['Real-time Preview', 'Facial Retargeting', 'Animation Effects'],
+      icon: '✨',
+      category: 'Real-time Processing',
+      credits: 0,
+      usage: 0
+    }
+  ];
+
+  // Navigation tabs
+  const navigationTabs = [
+    { id: 'overview', label: 'Overview', icon: <Home size={20} /> },
+    { id: 'shotstack', label: 'ShortStack', icon: <Film size={20} /> },
+    { id: 'creatomate', label: 'CreatoMate', icon: <Palette size={20} /> },
+    { id: 'plainly', label: 'Pandly Videos', icon: <Sparkles size={20} /> },
+    { id: 'tavus', label: 'Tavas', icon: <User size={20} /> },
+    { id: 'promptclip', label: 'PromptClip', icon: <Wand2 size={20} /> },
+    { id: 'luckyedit', label: 'LuckyEdit', icon: <Music size={20} /> },
+    { id: 'ltxvideo', label: 'LTX Video', icon: <Camera size={20} /> },
+    { id: 'vant21', label: 'Vant 2.1', icon: <Globe size={20} /> },
+    { id: 'profile', label: 'Profile', icon: <Settings size={20} /> }
+  ];
 
   // Load projects from API
   useEffect(() => {
@@ -50,33 +200,12 @@ const Dashboard = () => {
         setProjects([
           {
             id: 1,
-            name: 'Cinematic Landscape',
-            prompt: 'A breathtaking mountain landscape with dramatic lighting',
+            name: 'Demo Project 1',
+            prompt: 'Create a cinematic video about space exploration',
+            apiUsed: 'shotstack',
             status: 'completed',
-            thumbnail: '/api/placeholder/300/200',
-            duration: '0:30',
-            createdAt: '2024-01-15',
-            apiUsed: 'shotstack'
-          },
-          {
-            id: 2,
-            name: 'Product Showcase',
-            prompt: 'Professional product presentation with 3D effects',
-            status: 'processing',
-            thumbnail: '/api/placeholder/300/200',
-            duration: '0:45',
-            createdAt: '2024-01-14',
-            apiUsed: 'creatomate'
-          },
-          {
-            id: 3,
-            name: 'Abstract Art',
-            prompt: 'Colorful abstract animation with fluid motion graphics',
-            status: 'draft',
-            thumbnail: '/api/placeholder/300/200',
-            duration: '1:00',
-            createdAt: '2024-01-13',
-            apiUsed: 'promptclip'
+            createdAt: new Date().toISOString(),
+            videoUrl: 'https://example.com/video1.mp4'
           }
         ]);
       } finally {
@@ -86,118 +215,6 @@ const Dashboard = () => {
 
     loadProjects();
   }, []);
-
-  const tabs = [
-    { id: 'projects', label: 'My Projects', icon: <Video size={20} /> },
-    { id: 'tools', label: 'AI Tools', icon: <Zap size={20} /> },
-    { id: 'templates', label: 'Templates', icon: <Edit3 size={20} /> },
-    { id: 'analytics', label: 'Analytics', icon: <BarChart3 size={20} /> },
-    { id: 'settings', label: 'Settings', icon: <Settings size={20} /> }
-  ];
-
-  const apis = [
-    { 
-      id: 'shotstack', 
-      name: 'Shotstack', 
-      status: 'connected', 
-      color: '#10b981',
-      description: 'Professional video generation with advanced editing',
-      features: ['HD/4K Video', 'Multiple Formats', 'Real-time Processing'],
-      icon: '🎬'
-    },
-    { 
-      id: 'creatomate', 
-      name: 'Creatomate', 
-      status: 'connected', 
-      color: '#3b82f6',
-      description: 'Template-based video creation for marketing',
-      features: ['Professional Templates', 'Brand Consistency', 'Quick Production'],
-      icon: '🎨'
-    },
-    { 
-      id: 'plainly', 
-      name: 'Plainly Videos', 
-      status: 'connected', 
-      color: '#f59e0b',
-      description: 'Automated video production from data',
-      features: ['Data-driven Videos', 'Automation', 'Bulk Processing'],
-      icon: '⚡'
-    },
-    { 
-      id: 'tavus', 
-      name: 'Tavus', 
-      status: 'connected', 
-      color: '#ef4444',
-      description: 'Personalized video generation with AI avatars',
-      features: ['AI Avatars', 'Personalization', 'Custom Voices'],
-      icon: '🤖'
-    }
-  ];
-
-  const tools = [
-    { 
-      id: 'promptclip', 
-      name: 'PromptClip', 
-      status: 'available', 
-      color: '#8b5cf6',
-      description: 'Open-source video generation from text prompts',
-      features: ['Open Source', 'Text-to-Video', 'Customizable'],
-      icon: '🔧'
-    },
-    { 
-      id: 'lucy', 
-      name: 'Lucy Edit', 
-      status: 'available', 
-      color: '#ec4899',
-      description: 'AI-powered video editing by Daycart',
-      features: ['AI Editing', 'Smart Cuts', 'Auto Enhancement'],
-      icon: '✨'
-    },
-    { 
-      id: 'ltx', 
-      name: 'LTXVideo', 
-      status: 'available', 
-      color: '#06b6d4',
-      description: 'Advanced video processing by Lightricks',
-      features: ['Professional Tools', 'Advanced Effects', 'High Quality'],
-      icon: '🎭'
-    },
-    { 
-      id: 'wan', 
-      name: 'Wan 2.1', 
-      status: 'available', 
-      color: '#84cc16',
-      description: 'Video generation tool by Alibaba',
-      features: ['Enterprise Grade', 'Scalable', 'Cloud Processing'],
-      icon: '☁️'
-    }
-  ];
-
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case 'completed':
-        return <CheckCircle size={16} className="text-green-500" />;
-      case 'processing':
-        return <Loader size={16} className="text-blue-500 animate-spin" />;
-      case 'failed':
-        return <AlertCircle size={16} className="text-red-500" />;
-      default:
-        return <Clock size={16} className="text-gray-500" />;
-    }
-  };
-
-  const getStatusText = (status) => {
-    switch (status) {
-      case 'completed':
-        return 'Completed';
-      case 'processing':
-        return 'Processing';
-      case 'failed':
-        return 'Failed';
-      default:
-        return 'Draft';
-    }
-  };
 
   const handleCreateProject = async (e) => {
     e.preventDefault();
@@ -214,7 +231,7 @@ const Dashboard = () => {
         apiUsed: newProject.apiUsed,
         status: 'draft'
       };
-      
+
       const createdProject = await apiService.createProject(projectData);
       setProjects([createdProject, ...projects]);
       setShowCreateModal(false);
@@ -232,318 +249,383 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const result = await apiService.processVideo(projectId, apiKey, service);
-      
-      // Update project status
-      setProjects(projects.map(project => 
-        project.id === projectId 
-          ? { ...project, status: 'processing', jobId: result.jobId }
-          : project
-      ));
+      console.log('Video processing result:', result);
+      // Handle success
     } catch (error) {
       console.error('Failed to process video:', error);
-      setError('Failed to process video. Please check your API key.');
+      setError('Failed to process video. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="dashboard">
-      <div className="dashboard-sidebar">
-        <div className="sidebar-header">
-          <div className="sidebar-logo">
-            <div className="logo-icon">AI</div>
-            <span className="logo-text">Video Editor</span>
+  const renderOverview = () => (
+    <div className="dashboard-overview">
+      <div className="overview-header">
+        <h1>Welcome back, {user?.name || 'Creator'}!</h1>
+        <p>Ready to create amazing videos with AI?</p>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="summary-cards">
+        <div className="summary-card">
+          <div className="card-icon">
+            <Video size={24} />
+          </div>
+          <div className="card-content">
+            <h3>Total Videos</h3>
+            <span className="card-number">1,247</span>
+            <span className="card-change">+12% this month</span>
           </div>
         </div>
 
+        <div className="summary-card">
+          <div className="card-icon">
+            <CreditCard size={24} />
+          </div>
+          <div className="card-content">
+            <h3>Credits Used</h3>
+            <span className="card-number">2,456</span>
+            <span className="card-change">+8% this month</span>
+          </div>
+        </div>
+
+        <div className="summary-card">
+          <div className="card-icon">
+            <Activity size={24} />
+          </div>
+          <div className="card-content">
+            <h3>Processing Queue</h3>
+            <span className="card-number">3</span>
+            <span className="card-change">Active now</span>
+          </div>
+        </div>
+
+        <div className="summary-card">
+          <div className="card-icon">
+            <TrendingUp size={24} />
+          </div>
+          <div className="card-content">
+            <h3>Success Rate</h3>
+            <span className="card-number">98.5%</span>
+            <span className="card-change">+2.1% this month</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="quick-actions">
+        <h2>Quick Actions</h2>
+        <div className="action-buttons">
+          <button 
+            className="action-btn primary"
+            onClick={() => setShowCreateModal(true)}
+          >
+            <Plus size={20} />
+            Generate New Video
+          </button>
+          <button className="action-btn secondary">
+            <Upload size={20} />
+            Upload Media
+          </button>
+          <button className="action-btn secondary">
+            <Templates size={20} />
+            Browse Templates
+          </button>
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+      <div className="recent-activity">
+        <h2>Recent Activity</h2>
+        <div className="activity-list">
+          {projects.slice(0, 5).map((project) => (
+            <div key={project.id} className="activity-item">
+              <div className="activity-icon">
+                <Video size={16} />
+              </div>
+              <div className="activity-content">
+                <h4>{project.name}</h4>
+                <p>Created with {project.apiUsed}</p>
+                <span className="activity-time">
+                  {new Date(project.createdAt).toLocaleDateString()}
+                </span>
+              </div>
+              <div className="activity-status">
+                <span className={`status-badge ${project.status}`}>
+                  {project.status}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* API Status */}
+      <div className="api-status">
+        <h2>API Status</h2>
+        <div className="api-grid">
+          {apis.map((api) => (
+            <div key={api.id} className="api-status-card">
+              <div className="api-header">
+                <div className="api-icon">{api.icon}</div>
+                <div className="api-info">
+                  <h4>{api.name}</h4>
+                  <p>{api.category}</p>
+                </div>
+                <div className={`api-status-indicator ${api.status}`}>
+                  <Circle size={8} />
+                </div>
+              </div>
+              <div className="api-metrics">
+                <div className="metric">
+                  <span>Credits</span>
+                  <span>{api.credits}</span>
+                </div>
+                <div className="metric">
+                  <span>Used</span>
+                  <span>{api.usage}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderApiPage = (apiId) => {
+    const api = apis.find(a => a.id === apiId);
+    if (!api) return null;
+
+    return (
+      <div className="api-page">
+        <div className="api-header">
+          <div className="api-branding">
+            <div className="api-logo">{api.icon}</div>
+            <div className="api-title">
+              <h1>{api.name}</h1>
+              <p>{api.description}</p>
+            </div>
+          </div>
+          <div className="api-status-badge">
+            <span className={`status ${api.status}`}>{api.status}</span>
+          </div>
+        </div>
+
+        <div className="api-content">
+          <div className="api-form">
+            <h2>Generate Video</h2>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <div className="form-group">
+                <label>Project Name</label>
+                <input 
+                  type="text" 
+                  placeholder="Enter project name"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Prompt</label>
+                <textarea 
+                  placeholder="Describe your video idea..."
+                  className="form-textarea"
+                  rows={4}
+                />
+              </div>
+
+              {apiId === 'shotstack' && (
+                <>
+                  <div className="form-group">
+                    <label>Aspect Ratio</label>
+                    <select className="form-select">
+                      <option value="16:9">16:9 (Widescreen)</option>
+                      <option value="9:16">9:16 (Vertical)</option>
+                      <option value="1:1">1:1 (Square)</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label>Voice Selection</label>
+                    <select className="form-select">
+                      <option value="male">Male Voice</option>
+                      <option value="female">Female Voice</option>
+                      <option value="neutral">Neutral Voice</option>
+                    </select>
+                  </div>
+                </>
+              )}
+
+              {apiId === 'creatomate' && (
+                <>
+                  <div className="form-group">
+                    <label>Template</label>
+                    <select className="form-select">
+                      <option value="corporate">Corporate</option>
+                      <option value="social">Social Media</option>
+                      <option value="promotional">Promotional</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label>Resolution</label>
+                    <select className="form-select">
+                      <option value="1080p">1080p HD</option>
+                      <option value="4k">4K Ultra HD</option>
+                    </select>
+                  </div>
+                </>
+              )}
+
+              <div className="form-actions">
+                <button type="button" className="btn-secondary">
+                  Preview
+                </button>
+                <button type="submit" className="btn-primary">
+                  <Zap size={16} />
+                  Generate Now
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="api-preview">
+            <h3>Preview</h3>
+            <div className="preview-window">
+              <div className="preview-placeholder">
+                <Video size={48} />
+                <p>Your video preview will appear here</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderProfile = () => (
+    <div className="profile-page">
+      <div className="profile-header">
+        <h1>Profile Settings</h1>
+        <p>Manage your account and preferences</p>
+      </div>
+
+      <div className="profile-content">
+        <div className="profile-section">
+          <h2>Personal Information</h2>
+          <form className="profile-form">
+            <div className="form-row">
+              <div className="form-group">
+                <label>Full Name</label>
+                <input type="text" defaultValue={user?.name || ''} />
+              </div>
+              <div className="form-group">
+                <label>Email</label>
+                <input type="email" defaultValue={user?.email || ''} />
+              </div>
+            </div>
+            <button type="submit" className="btn-primary">Save Changes</button>
+          </form>
+        </div>
+
+        <div className="profile-section">
+          <h2>Subscription & Credits</h2>
+          <div className="credits-overview">
+            <div className="credits-card">
+              <h3>Total Credits</h3>
+              <span className="credits-amount">10,000</span>
+            </div>
+            <div className="credits-card">
+              <h3>Used This Month</h3>
+              <span className="credits-amount">2,456</span>
+            </div>
+            <div className="credits-card">
+              <h3>Remaining</h3>
+              <span className="credits-amount">7,544</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="profile-section">
+          <h2>API Access History</h2>
+          <div className="api-history">
+            {apis.map((api) => (
+              <div key={api.id} className="api-history-item">
+                <div className="api-info">
+                  <span className="api-icon">{api.icon}</span>
+                  <span className="api-name">{api.name}</span>
+                </div>
+                <div className="api-usage">
+                  <span>{api.usage} / {api.credits}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="dashboard-container">
+      {/* Sidebar */}
+      <div className={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
+        <div className="sidebar-header">
+          <div className="logo">
+            <Film size={24} />
+            {!sidebarCollapsed && <span>AI Video Editor</span>}
+          </div>
+          <button 
+            className="sidebar-toggle"
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+          >
+            {sidebarCollapsed ? <Menu size={20} /> : <X size={20} />}
+          </button>
+        </div>
+
         <nav className="sidebar-nav">
-          {tabs.map((tab) => (
+          {navigationTabs.map((tab) => (
             <button
               key={tab.id}
               className={`nav-item ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
             >
-              {tab.icon}
-              <span>{tab.label}</span>
+              <span className="nav-icon">{tab.icon}</span>
+              {!sidebarCollapsed && <span className="nav-label">{tab.label}</span>}
             </button>
           ))}
         </nav>
 
         <div className="sidebar-footer">
-          <div className="user-info">
-            <div className="user-avatar">
-              {user?.firstName?.[0]}{user?.lastName?.[0]}
-            </div>
-            <div className="user-details">
-              <div className="user-name">{user?.firstName} {user?.lastName}</div>
-              <div className="user-email">{user?.email}</div>
-            </div>
-          </div>
           <button className="logout-btn" onClick={logout}>
-            Logout
+            <LogOut size={20} />
+            {!sidebarCollapsed && <span>Logout</span>}
           </button>
         </div>
       </div>
 
-      <div className="dashboard-main">
-        <div className="dashboard-header">
-          <div className="header-content">
-            <h1 className="dashboard-title">
-              {tabs.find(tab => tab.id === activeTab)?.label}
-            </h1>
-            <button 
-              className="create-btn"
-              onClick={() => setShowCreateModal(true)}
-            >
-              <Plus size={20} />
-              Create New
+      {/* Main Content */}
+      <div className="main-content">
+        <div className="content-header">
+          <div className="header-left">
+            <h1>{navigationTabs.find(tab => tab.id === activeTab)?.label}</h1>
+          </div>
+          <div className="header-right">
+            <button className="header-btn">
+              <Bell size={20} />
+            </button>
+            <button className="header-btn">
+              <Search size={20} />
+            </button>
+            <button className="header-btn">
+              <Settings size={20} />
             </button>
           </div>
         </div>
 
-        <div className="dashboard-content">
-          {activeTab === 'projects' && (
-            <div className="projects-section">
-              <div className="projects-header">
-                <div className="projects-stats">
-                  <div className="stat-card">
-                    <div className="stat-number">{projects.length}</div>
-                    <div className="stat-label">Total Projects</div>
-                  </div>
-                  <div className="stat-card">
-                    <div className="stat-number">{projects.filter(p => p.status === 'completed').length}</div>
-                    <div className="stat-label">Completed</div>
-                  </div>
-                  <div className="stat-card">
-                    <div className="stat-number">{projects.filter(p => p.status === 'processing').length}</div>
-                    <div className="stat-label">Processing</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="projects-grid">
-                {projects.map((project) => (
-                  <div key={project.id} className="project-card">
-                    <div className="project-thumbnail">
-                      <div className="thumbnail-overlay">
-                        <button className="play-btn">
-                          <Play size={24} />
-                        </button>
-                      </div>
-                      <div className="project-status">
-                        {getStatusIcon(project.status)}
-                        <span>{getStatusText(project.status)}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="project-info">
-                      <h3 className="project-name">{project.name}</h3>
-                      <p className="project-prompt">{project.prompt}</p>
-                      <div className="project-meta">
-                        <span className="project-duration">{project.duration}</span>
-                        <span className="project-api">{project.apiUsed}</span>
-                        <span className="project-date">{project.createdAt}</span>
-                      </div>
-                    </div>
-
-                    <div className="project-actions">
-                      <button className="action-btn">
-                        <Eye size={16} />
-                      </button>
-                      <button className="action-btn">
-                        <Edit3 size={16} />
-                      </button>
-                      <button className="action-btn">
-                        <Download size={16} />
-                      </button>
-                      <button className="action-btn">
-                        <Share2 size={16} />
-                      </button>
-                      <button className="action-btn delete">
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'tools' && (
-            <div className="tools-section">
-              <div className="section-header">
-                <h2>AI Video Tools & APIs</h2>
-                <p>Choose from our comprehensive collection of video generation tools and APIs</p>
-              </div>
-              
-              <div className="tools-categories">
-                <div className="category-section">
-                  <h3 className="category-title">
-                    <span className="category-icon">🔌</span>
-                    Professional APIs
-                    <span className="category-badge">4 Connected</span>
-                  </h3>
-                  <div className="tools-grid">
-                    {apis.map((api) => (
-                      <div key={api.id} className="tool-card api-card">
-                        <div className="tool-header">
-                          <div className="tool-icon">{api.icon}</div>
-                          <div className="tool-status">
-                            <div className={`status-dot ${api.status}`}></div>
-                            <span className="status-text">{api.status}</span>
-                          </div>
-                        </div>
-                        <div className="tool-content">
-                          <h4 className="tool-name">{api.name}</h4>
-                          <p className="tool-description">{api.description}</p>
-                          <div className="tool-features">
-                            {api.features.map((feature, index) => (
-                              <span key={index} className="feature-tag">{feature}</span>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="tool-actions">
-                          <button className="tool-btn primary">
-                            <Play size={16} />
-                            Create Video
-                          </button>
-                          <button className="tool-btn secondary">
-                            <Settings size={16} />
-                            Configure
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="category-section">
-                  <h3 className="category-title">
-                    <span className="category-icon">🛠️</span>
-                    Open Source Tools
-                    <span className="category-badge">4 Available</span>
-                  </h3>
-                  <div className="tools-grid">
-                    {tools.map((tool) => (
-                      <div key={tool.id} className="tool-card tool-card-open">
-                        <div className="tool-header">
-                          <div className="tool-icon">{tool.icon}</div>
-                          <div className="tool-status">
-                            <div className={`status-dot ${tool.status}`}></div>
-                            <span className="status-text">{tool.status}</span>
-                          </div>
-                        </div>
-                        <div className="tool-content">
-                          <h4 className="tool-name">{tool.name}</h4>
-                          <p className="tool-description">{tool.description}</p>
-                          <div className="tool-features">
-                            {tool.features.map((feature, index) => (
-                              <span key={index} className="feature-tag">{feature}</span>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="tool-actions">
-                          <button className="tool-btn primary">
-                            <Play size={16} />
-                            Use Tool
-                          </button>
-                          <button className="tool-btn secondary">
-                            <Eye size={16} />
-                            Learn More
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'templates' && (
-            <div className="templates-section">
-              <div className="section-header">
-                <h2>Video Templates</h2>
-                <p>Choose from our collection of professional templates</p>
-              </div>
-              
-              <div className="templates-grid">
-                {['Cinematic', 'Corporate', 'Social Media', 'Product', 'Educational', 'Creative'].map((template, index) => (
-                  <div key={index} className="template-card">
-                    <div className="template-preview">
-                      <div className="template-thumbnail"></div>
-                    </div>
-                    <div className="template-info">
-                      <h3>{template} Template</h3>
-                      <p>Professional {template.toLowerCase()} video template</p>
-                    </div>
-                    <button className="use-template-btn">Use Template</button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'analytics' && (
-            <div className="analytics-section">
-              <div className="analytics-grid">
-                <div className="analytics-card">
-                  <h3>Video Performance</h3>
-                  <div className="chart-placeholder">
-                    <BarChart3 size={48} />
-                    <p>Performance metrics will appear here</p>
-                  </div>
-                </div>
-                <div className="analytics-card">
-                  <h3>Usage Statistics</h3>
-                  <div className="stats-list">
-                    <div className="stat-item">
-                      <span>Videos Created</span>
-                      <span>24</span>
-                    </div>
-                    <div className="stat-item">
-                      <span>Total Views</span>
-                      <span>1,234</span>
-                    </div>
-                    <div className="stat-item">
-                      <span>Hours Saved</span>
-                      <span>48</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'settings' && (
-            <div className="settings-section">
-              <div className="settings-grid">
-                <div className="settings-card">
-                  <h3>API Keys</h3>
-                  <p>Configure your API keys for external services</p>
-                  <button 
-                    className="settings-btn"
-                    onClick={() => setShowApiKeysModal(true)}
-                  >
-                    Manage API Keys
-                  </button>
-                </div>
-                
-                <div className="settings-card">
-                  <h3>Account Settings</h3>
-                  <p>Update your profile and preferences</p>
-                  <button className="settings-btn">Edit Profile</button>
-                </div>
-                
-                <div className="settings-card">
-                  <h3>Billing</h3>
-                  <p>Manage your subscription and billing</p>
-                  <button className="settings-btn">View Billing</button>
-                </div>
-              </div>
-            </div>
-          )}
+        <div className="content-body">
+          {activeTab === 'overview' && renderOverview()}
+          {activeTab === 'profile' && renderProfile()}
+          {apis.some(api => api.id === activeTab) && renderApiPage(activeTab)}
         </div>
       </div>
 
@@ -552,125 +634,57 @@ const Dashboard = () => {
         <div className="modal-overlay">
           <div className="modal">
             <div className="modal-header">
-              <h2>Create New Video</h2>
+              <h2>Create New Project</h2>
               <button 
                 className="modal-close"
                 onClick={() => setShowCreateModal(false)}
               >
-                ×
+                <X size={20} />
               </button>
             </div>
-            <div className="modal-content">
-              <form onSubmit={handleCreateProject}>
-                {error && (
-                  <div className="error-message">
-                    {error}
-                  </div>
-                )}
-                <div className="form-group">
-                  <label>Project Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="Enter project name"
-                    value={newProject.name}
-                    onChange={(e) => setNewProject({...newProject, name: e.target.value})}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Video Prompt</label>
-                  <textarea 
-                    placeholder="Describe your video idea..."
-                    rows="4"
-                    value={newProject.prompt}
-                    onChange={(e) => setNewProject({...newProject, prompt: e.target.value})}
-                    required
-                  ></textarea>
-                </div>
-                <div className="form-group">
-                  <label>Select API/Tool</label>
-                  <select
-                    value={newProject.apiUsed}
-                    onChange={(e) => setNewProject({...newProject, apiUsed: e.target.value})}
-                  >
-                    <option value="">Choose an option</option>
-                    {apis.map(api => (
-                      <option key={api.id} value={api.id}>
-                        {api.name}
-                      </option>
-                    ))}
-                    {tools.map(tool => (
-                      <option key={tool.id} value={tool.id}>
-                        {tool.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="modal-actions">
-                  <button 
-                    type="button"
-                    className="btn-secondary"
-                    onClick={() => setShowCreateModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    type="submit"
-                    className="btn-primary"
-                    disabled={loading}
-                  >
-                    {loading ? 'Creating...' : 'Create Project'}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* API Keys Modal */}
-      {showApiKeysModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="modal-header">
-              <h2>API Keys Management</h2>
-              <button 
-                className="modal-close"
-                onClick={() => setShowApiKeysModal(false)}
-              >
-                ×
-              </button>
-            </div>
-            <div className="modal-content">
-              <div className="api-keys-list">
-                {apis.map(api => (
-                  <div key={api.id} className="api-key-item">
-                    <div className="api-info">
-                      <div className="api-name">{api.name}</div>
-                      <div className={`api-status ${api.status}`}>
-                        {api.status.replace('_', ' ')}
-                      </div>
-                    </div>
-                    <div className="api-actions">
-                      <input 
-                        type="password" 
-                        placeholder="Enter API key"
-                        className="api-key-input"
-                      />
-                      <button className="api-save-btn">Save</button>
-                    </div>
-                  </div>
-                ))}
+            <form onSubmit={handleCreateProject}>
+              {error && <div className="error-message">{error}</div>}
+              <div className="form-group">
+                <label>Project Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter project name"
+                  value={newProject.name}
+                  onChange={(e) => setNewProject({...newProject, name: e.target.value})}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Prompt</label>
+                <textarea
+                  placeholder="Describe your video idea..."
+                  value={newProject.prompt}
+                  onChange={(e) => setNewProject({...newProject, prompt: e.target.value})}
+                  rows={4}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Select API/Tool</label>
+                <select
+                  value={newProject.apiUsed}
+                  onChange={(e) => setNewProject({...newProject, apiUsed: e.target.value})}
+                >
+                  <option value="">Choose an option</option>
+                  {apis.map(api => (
+                    <option key={api.id} value={api.id}>{api.name}</option>
+                  ))}
+                </select>
               </div>
               <div className="modal-actions">
-                <button 
-                  className="btn-secondary"
-                  onClick={() => setShowApiKeysModal(false)}
-                >
-                  Close
+                <button type="button" className="btn-secondary" onClick={() => setShowCreateModal(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn-primary" disabled={loading}>
+                  {loading ? 'Creating...' : 'Create Project'}
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       )}
