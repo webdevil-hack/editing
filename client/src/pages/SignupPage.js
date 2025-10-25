@@ -15,7 +15,8 @@ import {
   Star,
   ChevronRight,
   Loader,
-  CheckCircle
+  CheckCircle,
+  AlertCircle
 } from 'lucide-react';
 import './SignupPage.css';
 

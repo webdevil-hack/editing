@@ -48,6 +48,8 @@ import {
   List,
   RefreshCw,
   Pause,
+  Upload,
+  Layout as Templates,
   PlayCircle,
   Square,
   Circle,

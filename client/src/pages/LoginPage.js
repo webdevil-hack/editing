@@ -13,7 +13,8 @@ import {
   Shield,
   Star,
   ChevronRight,
-  Loader
+  Loader,
+  AlertCircle
 } from 'lucide-react';
 import './LoginPage.css';
 
