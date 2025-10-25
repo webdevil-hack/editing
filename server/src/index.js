@@ -30,17 +30,17 @@ app.use('/api/jobs', jobRoutes);
 app.use('/api/tools', toolRoutes);
 app.use('/api/contact', contactRoutes);
 
-const PORT = process.env.PORT || 4000;
+// Initialize database connection
+connectDb().catch((err) => {
+  console.error('DB connection error:', err?.message || err);
+});
 
-connectDb()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('DB connection error:', err?.message || err);
-    app.listen(PORT, () => {
-      console.log(`Server running (DB not connected) on http://localhost:${PORT}`);
-    });
+// For Vercel deployment
+if (process.env.NODE_ENV === 'production') {
+  module.exports = app;
+} else {
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
   });
+}
