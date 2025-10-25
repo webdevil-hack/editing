@@ -7,7 +7,7 @@ import './index.css'
 // Import pages
 import ModernHome from './pages/Home/ModernHome'
 import ModernLogin from './pages/Login/ModernLogin'
-import TestDashboard from './test-dashboard'
+import Dashboard from './pages/Dashboard/Dashboard'
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <TestDashboard />
+    element: <Dashboard />
   }
 ])
 
