@@ -6,6 +6,7 @@ import RootLayout from './routes/RootLayout';
 import Home from './routes/Home';
 import About from './routes/About';
 import Features from './routes/Features';
+import Pricing from './routes/Pricing';
 import Contact from './routes/Contact';
 import Login from './routes/Login';
 import Signup from './routes/Signup';
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },
       { path: 'features', element: <Features /> },
+      { path: 'pricing', element: <Pricing /> },
       { path: 'contact', element: <Contact /> },
       { path: 'login', element: <Login /> },
       { path: 'signup', element: <Signup /> },
