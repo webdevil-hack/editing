@@ -1,6 +1,7 @@
 import { Suspense, useState } from 'react'
 import { Routes, Route, NavLink } from 'react-router-dom'
 import KeysPage from './pages/Keys'
+import CreativePage from './pages/CreativePage'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stars } from '@react-three/drei'
 import { useAuth } from './context/auth'
@@ -28,6 +29,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           <div className="font-semibold tracking-wide">CineAI</div>
           <nav className="flex gap-6 text-sm">
             <NavLink to="/" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>Home</NavLink>
+            <NavLink to="/creative" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>Creative</NavLink>
             <NavLink to="/features" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>Features</NavLink>
             <NavLink to="/about" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>About</NavLink>
             <NavLink to="/contact" className={({isActive})=>`hover:text-accent ${isActive?'text-accent':''}`}>Contact</NavLink>
@@ -202,6 +204,7 @@ export default function App() {
     <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/creative" element={<CreativePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/contact" element={<ContactPage />} />
