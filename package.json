@@ -4,7 +4,7 @@
   "description": "Cinematic AI Video Editor - Complete MERN Stack Application",
   "main": "server/index.js",
   "scripts": {
-    "vercel-build": "cd client && npm install && npm run build",
+    "vercel-build": "node build-vercel.js",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
     "build": "cd client && npm run build",
     "start": "cd server && npm start"
